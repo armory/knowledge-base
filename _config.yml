@@ -1,7 +1,7 @@
 # ----
 # Site
 
-title: Armory
+title: Armory Knowledge Base
 url: "https://kb.armory.io/"
 baseurl:
 google_analytics_key:
@@ -22,6 +22,8 @@ social:
 
 # -----
 # Build
+
+destination: _dist
 
 timezone: Etc/UTC
 
