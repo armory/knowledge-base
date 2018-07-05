@@ -18,7 +18,7 @@ You can find more details at this link:
 
 
 ## How does Spinnaker handle multi-cluster and multi-region deploys to Kubernetes?
-In Spinnaker you can configure multiple Kubernetes accounts with different clusters which are located in different regions and then each deploy stage can target a specific account. So you can have N deploy stages, each going to a different account.
+In Spinnaker you can configure multiple Kubernetes accounts with different clusters which are located in different regions and then each deploy stage can target a specific account. So you can have N number of deploy stages, each going to a different kubernetes accounts.
 
 
 ## How does Spinnakers Kubernetes V2 handle ISTIO changes?
