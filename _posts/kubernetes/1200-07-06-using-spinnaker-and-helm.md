@@ -14,3 +14,7 @@ set_order: 1
 ---
 
 In this video, Ethan Rogers demonstrates a workflow for deploying Helm Charts with Armory Spinnaker. For more information on how Spinnaker integrates with Helm, check out [this blog post](https://blog.armory.io/deploy-helm-charts-with-spinnaker/).
+
+
+#### Additional Resources
+* Github Repo - <https://github.com/armory/spin-helm-demo>
