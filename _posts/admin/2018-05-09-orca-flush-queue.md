@@ -8,15 +8,19 @@ type: Document
 ---
 05/09/2018
 
-## Question:
+##: Question:
 
 My Orca instance is feels sluggish. How can I debug the cause and fix the problem?
 
-## Answer:
+***
+
+### Answer:
 
 There are a lot of factors that could lead to poor performance within Orca. We'll do our best document various issues we've found when operating Orca.
 
-## Dead or Undelivered Messages
+***
+
+### Dead or Undelivered Messages:
 
 Under the hood, Orca uses Redis to store a queue of tasks to perform. During each polling cycle, Orca it will attempt to read any messages that haven't been delivered and are past due. In some cases, these messsages may be deemed "undelieverable" and requeued. If enough of these messages build up, you may experience a slow down in your Pipeline executions.
 

@@ -7,9 +7,18 @@ description: [<]description not shown to user, used for SEO]
 type: Document
 ---
 
-[write your content here]
+### Question:
+
+[question here]
+
+***
+
+### Answer:
+
+[answer here]
 
 ***
 
 ### More Resources: 
 - [Describe Related Blog Post here](http://blog.armory.io/BLOG-POST-HERE)
+
