@@ -10,7 +10,7 @@ newsletter_action:
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 logo: /siteicon.png
-description: Knowledge base template for Jekyll.
+description: Armory's Knowledgebase for Enterprise Spinnaker Support
 author:
   name:
   email:
