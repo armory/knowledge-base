@@ -1,17 +1,18 @@
 ---
 date: 2018-01-18
-title: Parameters with Kubernetes Manifest And Using SpEL For Dynamic Environment Promotion
+title: Parameters with Kubernetes Manifest & Using SpEL
 categories:
    - Kubernetes
 description: How to promote a build with parameters in a manifest file based on a manual judgement stage with Spinnaker using Kubernetes
 type: Document
 ---
-05/17/2018
 
-## Question:
+### Question:
 How do I dynamically promote a build with parameters in a manifest file in Spinnaker using Kubernetes?
 
-## Answer:
+***
+
+### Answer:
 1. The first step is to understand how to use parameters in your kubernetes manifest file.  Here is a link to some good documentation:
 [Parameterize Kubernetes Manifests](https://www.spinnaker.io/guides/user/kubernetes-v2/parameterize-manifests/#parameterize-kubernetes-manifests)
 
@@ -19,6 +20,10 @@ How do I dynamically promote a build with parameters in a manifest file in Spinn
 
 Example: <br/>
 `Promote:${#judgement('Promote') == '' ? parameters['namespace'] : #judgement('Promote')}`
+
+***
+
+### More Resources:
 
 If you would like to learn more about SpEL and Pipeline expressions with Spinnaker you can find it here:
 [Pipeline Expressions Guide](https://www.spinnaker.io/guides/user/pipeline-expressions/#pipeline-expressions-guide)

@@ -6,14 +6,15 @@ categories:
 description: "What is /etc/default/server-env?"
 type: Document
 ---
-05/15/2018
 
-## Question
+### Question:
 - What is `/etc/default/server-env`?
 - How does a running instance know what application or environment it's in?
 - How does `/opt/spinnaker/env/ha.env` or `/opt/spinnaker/env/prod.env` get sourced during runtime?
 
-## Answer
+***
+
+### Answer:
 During an execution of a deploy stage of an application, Spinnaker will inject some information about the server group into `/etc/default/server-env`.
 If we have an application called `armoryspinnaker-prod-nonpolling`, Spinnaker will create a file on the running instance like:
 ```bash
@@ -31,6 +32,8 @@ LAUNCH_CONFIG="armoryspinnaker-prod-nonpolling-v984-0828050116281"
 
 There's a lot of uses cases, for example: Armory Spinnaker uses this information to determine which `/opt/spinnaker/env/*.env` file to load at runtime.
 
-To learn more: 
+***
+
+### More Resources: 
 - [https://docs.armory.io/admin-guides/userdata/](https://docs.armory.io/admin-guides/userdata/)
 - [https://www.spinnaker.io/setup/features/user-data/](https://www.spinnaker.io/setup/features/user-data/)

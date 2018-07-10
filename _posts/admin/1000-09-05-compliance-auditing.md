@@ -6,13 +6,14 @@ categories:
 description: Compliance and Auditing data from Spinnaker. Compliance. Auditing.
 type: Document
 ---
-04/30/2018
 
-## Question:
+### Question:
 
 How can Spinnaker help me with Compliance and Auditing around my deployments?
 
-## Answer:
+***
+
+### Answer:
 
 While Spinnaker doesn't have any _explicit_ functionality around auditing and compliance it exposes a number of tools that will help you craft a solution that fits your needs and use cases.
 

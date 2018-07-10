@@ -6,14 +6,14 @@ categories:
 description: Determining the version of Armory Spinnaker. 
 type: Document
 ---
-05/09/2018
 
-
-## Question
+### Question:
 
 How do I determine which version of Armory Spinnaker I'm running? 
 
-## Answer
+***
+
+### Answer:
 
 When running on AWS go to https://spinnaker.armory.io:8084/armory/versions. The port is configured on the ELB.
 

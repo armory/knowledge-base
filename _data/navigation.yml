@@ -1,9 +1,7 @@
-- name: Tutorials
+- name: Articles
   link: /
 - name: Videos
   link: /videos/
-- name: FAQ
-  link: /faq/
 - name: Docs
   link: http://docs.armory.io
 - name: Blog

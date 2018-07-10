@@ -5,12 +5,12 @@ title: Armory
 url: "https://kb.armory.io"
 baseurl:
 google_analytics_key:
-disqus_shortname:
+disqus_shortname: cloudarmory
 newsletter_action:
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 logo: /siteicon.png
-description: Knowledge base template for Jekyll.
+description: Armory's Knowledgebase for Enterprise Spinnaker Support
 author:
   name:
   email:
@@ -60,7 +60,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      comments: true
+      
   -
     scope:
       type: "sets"
@@ -90,5 +90,3 @@ social_icons:
 types:
   - Document
   - Video
-
-_comments:
