@@ -2,7 +2,7 @@
 date: 2018-07-17
 title: Understanding the Role of HELM and Spinnaker
 categories:
-   - kubernetes
+   - Kubernetes
 description: Q&A about how to use HELM with Spinnaker for Kubernetes
 type: Document
 ---
