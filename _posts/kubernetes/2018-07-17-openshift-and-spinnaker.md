@@ -1,3 +1,4 @@
+---
 date: 2018-07-17
 title: Using Openshift with Spinnaker
 categories:
