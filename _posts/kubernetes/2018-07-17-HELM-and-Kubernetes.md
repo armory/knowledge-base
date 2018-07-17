@@ -15,8 +15,10 @@ Thank you for helping me understand the roles of Helm and Spinnaker.
 As you might have guessed, I am very new to Helm. Currently, we are running our services in `Docker Swarm` and we’re doing a POC on `Kubernetes + Spinnaker + Helm`. Each of our service GitHub repo has a `Dockerfile` which has `CMD`s and `RUN`s tasks, how can I translate those in `HELM Charts` ?
 
 Example:
+
 ```
 FROM nginx
+
 COPY build /usr/share/nginx/html
 COPY entrypoint.sh /
 COPY nginx-default.conf /etc/nginx/conf.d/default.conf
@@ -32,7 +34,6 @@ CMD ["nginx", "-g", "daemon off;"]
 EXPOSE 80
 EXPOSE 443
 ```
-
 
 How and where can I write this in HELM Charts?
 
