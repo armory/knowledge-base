@@ -5,10 +5,10 @@ categories:
    - kubernetes
 description: Q&A about how to use HELM with Spinnaker for Kubernetes
 type: Document
-This is pulled from the Spinnaker Slack team
 ---
 
 ### Question:
+*This is a Q&A pulled from the Spinnaker Community Slack team, which [we encourage you to join here](http://join.spinnaker.io).*
 
 Thank you for helping me understand the roles of Helm and Spinnaker.
 
