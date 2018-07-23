@@ -14,30 +14,22 @@ type: Document
       artifacts:
         enabled: true
     ```
-2. Configure a Github Artifact account in `config/clouddriver-local.yml`. You'll need a [Github Personal Access Token](https://blog.github.com/2013-05-16-personal-api-tokens/) so that Clouddriver can fetch artifacts stored in your repositories. Most users have a bot account that they can use for automation like this. If you already have one, feel free to use it instead of creating a new one.
+2. Configure a Github Artifact account in `config/clouddriver-local.yml`. You'll need a [Github Personal Access Token](https://blog.github.com/2013-05-16-personal-api-tokens/) so that Clouddriver can fetch artifacts stored in your repositories. Most users have a bot account that they can use for automation like this. If you already have one, feel free to use it instead of creating a new one. `my-github-account` can be changed as you see fit. If you have multiple Github artifact accounts, it's best to use an identifiable name.
     ```yaml
     artifacts:
       github:
         enabled: true
         accounts:
-        - name: github-account-name # this will be the name of the artifact account within Spinnaker
-          username: armory-bot
-          token: personalAccessToken
+        - name: my-github-account # this will be the name of the artifact account within Spinnaker
+          username: <YOUR_ACCOUNT_USERNAME>
+          token: <YOUR_PERSONAL_ACCESS_TOKEN>
     ```
 
-3. Configure Github as an SCM source in `config/igor-local.yml`
-    ```yaml
-    github:
-      baseUrl: "https://api.github.com"
-      accessToken: personalAccessToken
-      commitDisplayLength: 8
-    ```
+3. Redeploy Armory Spinnaker
 
-4. Redeploy Armory Spinnaker
+4. Configure a Github webhook using [this documentation](https://www.spinnaker.io/setup/triggers/github/). If you have a lot of repositories, you can setup an Organization level webhook.
 
-5. Configure a Github webhook using [this documentation](https://www.spinnaker.io/setup/triggers/github/). If you have a lot of repositories, you can setup an Organization level webhook.
-
-6. Configure your Github artifacts and pipeline triggers following [this documentation](https://www.spinnaker.io/guides/user/pipeline/triggers/github/#using-github-artifacts-in-pipelines).
+5. Configure your Github artifacts and pipeline triggers following [this documentation](https://www.spinnaker.io/guides/user/pipeline/triggers/github/#using-github-artifacts-in-pipelines).
 
 ***
 
