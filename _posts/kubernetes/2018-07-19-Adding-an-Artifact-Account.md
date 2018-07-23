@@ -20,27 +20,14 @@ I have spent almost half a day trying to add an Artifact Account just like it sh
 
 ### Answer: 
 
-It looks like s3 artifact support was added to halyard but there isn’t a release with it yet so you’ll need to add some custom configuration.
+If you're using Armory Spinnaker, add an S3 Artifact account to `clouddriver-local.yml` using [this config](https://docs.armory.io/install-guide/adding_accounts/#s3).
 
-Check out this resource: https://www.spinnaker.io/reference/halyard/custom/
-Spinnaker
-Custom Configuration
-Global Continuous Delivery
-
-
-To enable s3 support, you can add a custom `clouddriver-local.yml` with this content
-```
-artifacts:
-  s3:
-    enabled: true
-    accounts:
-      - name: s3
-        region: {your-bucket-region}
-```
+If you're using OSS Spinnaker, you can add an S3 account using [these Halyard commands](https://www.spinnaker.io/reference/halyard/commands/#hal-config-artifact-s3). 
 
 
 ***
 
-
 ### More Resources: 
-- [You can find more Kubernetes & Spinnaker related content here](http://go.armory.io/kubernetes)
+- [You can find more Kubernetes & Spinnaker related content here](https://docs.armory.io/install-guide/adding_accounts/#adding-artifact-accounts)
+- [And here](https://www.spinnaker.io/reference/artifacts/)
+

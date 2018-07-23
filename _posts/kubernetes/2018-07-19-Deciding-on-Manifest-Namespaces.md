@@ -17,17 +17,13 @@ How does the provider decide which namespace to use to apply manifests? Just tri
 
 ### Answer:
 
-Typically manifests will define the namespace in which they are applied.
+[spinnaker/spinnaker#2831](https://github.com/spinnaker/spinnaker/issues/2831) defines a way we could make this more dynamic within the `Deploy (Manifest)` stage.
 
-If you want to do that dynamically, however, you’ll need to get a bit creative until we have a solution for this: 
-
-https://github.com/spinnaker/spinnaker/issues/2831
-GitHub
-[Kubernetes V2] Add namespace option for deployManifest · Issue #2831 · spinnaker/spinnaker
-Issue Summary: I would like to see an (optional) text field in the UI where I can set the target namespace. With this I won't have to create a deployment manifest for each namespace I deploy to...
+Until that issue is closed you can use Pipeline parameters and SPEL within your manifests as seen [here](https://kb.armory.io/kubernetes/parameters-with-Kubernetes/).
 
 
 ***
 
 ### More Resources: 
-- [You can find more Kubernetes & Spinnaker related content here](http://go.armory.io/kubernetes)
+- [You can find more Kubernetes & Spinnaker related content here](https://kb.armory.io/kubernetes/parameters-with-Kubernetes/)
+- [And here](spinnaker/spinnaker#2831)

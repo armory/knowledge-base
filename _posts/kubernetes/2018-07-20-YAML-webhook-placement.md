@@ -18,13 +18,13 @@ Where do I put a custom webhook yaml in halyard for it to get merged into Spinna
 
 ### Answer:
 
-all webhooks go under `webhooks.preconfigured` in `orca-local.yml`.
+All webhooks go under `webhooks.preconfigured` in `orca-local.yml`.
 
-This should be helpful: https://www.spinnaker.io/guides/operator/custom-webhook-stages/
+You can find documentation on defining custom webhook stages [here](https://www.spinnaker.io/guides/operator/custom-webhook-stages/).
 
-And here’s how to add a custom configuration using halyard: https://www.spinnaker.io/reference/halyard/custom/
+If you're using OSS Spinnaker, you'll need to add a custom Orca profile as seen [here](https://www.spinnaker.io/reference/halyard/custom/).
 
 ***
 
 ### More Resources: 
-- [You can find more Kubernetes & Spinnaker related content here](http://go.armory.io/kubernetes)
+- [You can find more Kubernetes & Spinnaker related content here](https://blog.spinnaker.io/custom-spinnaker-stages-with-preconfigured-webhooks-84c5b5dae861)
