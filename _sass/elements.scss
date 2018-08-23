@@ -46,3 +46,14 @@ code, pre, tt {
   border-radius: 2px;
   padding: 2px 5px;
 }
+
+
+code {
+  padding: 0px;
+  white-space: pre;
+  overflow-y: scroll;
+
+  .vglnk {
+    color: white;
+  }
+}
