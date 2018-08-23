@@ -27,8 +27,8 @@ img {
 }
 
 ul, ol {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 12px;
+  margin-bottom: 12px;
   li {
     margin: 0 0 10px 0;
   }
@@ -45,4 +45,15 @@ code, pre, tt {
   color: #FAFAFA;
   border-radius: 2px;
   padding: 2px 5px;
+}
+
+
+code {
+  padding: 0px;
+  white-space: pre;
+  overflow-y: scroll;
+
+  .vglnk {
+    color: white;
+  }
 }
