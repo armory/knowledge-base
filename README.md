@@ -15,11 +15,13 @@ There are default examples of both video and document in the repo called [video_
 * SEO tags
 * Google Analytics
 
+
 ## Setup
 
 1. Add your site and author details in `_config.yml`.
 2. Add your Google Analytics, Disqus and MailChimp keys to `_config.yml`.
 3. Get a workflow going to see your site's output (with [CloudCannon](https://app.cloudcannon.com/) or Jekyll locally).
+
 
 ## Running locally
 
@@ -34,11 +36,16 @@ You can view your changes at : `http://localhost:4000` or `http://192.168.99.100
 
 to exit, you can do `ctrl+c`
 
+### Livereload
+Install the [Livereload chrome extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) if you like seeing the page auto refresh when making a change.
+
+
 ## Editing
 
 Base is already optimised for adding, updating and removing tutorials, navigation, footer and FAQ information in CloudCannon.
 
 The sticky sidebar in tutorials in populated by pulling out `<h2>` elements from the content.
+
 
 ### Posts
 
