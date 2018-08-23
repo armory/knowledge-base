@@ -24,11 +24,11 @@ Number of items (999999) to cache exceeds upper threshold (1000) in monitor=Jenk
 
 
 ## Causes
-There's could be many causes, here are a few:
-- There could have been a new Jenkins master added
-- There could have been a new docker registry added
-- Igor could have been down for a long time
-- Redis might have been wiped
+Potential causes could be:
+- A new Jenkins master has been added
+- A new docker registry has been added
+- Igor has been down for a while
+- Redis has been wiped
 
 
 ## Solution
