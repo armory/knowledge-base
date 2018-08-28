@@ -55,3 +55,9 @@ curl -X POST http://igor_address_port/admin/pollers/fastforward/help
 ```yml
 spinnaker.pollingSafeguard.itemUpperThreshold: 1000  # some number bigger than your current limits
 ```
+
+
+## More information
+This affects Armory versions >= v1.13.7.
+
+See [https://github.com/spinnaker/igor/pull/254](https://github.com/spinnaker/igor/pull/254) for more details.
