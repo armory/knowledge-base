@@ -2,7 +2,7 @@
 date: 2018-08-21
 title: Webhook Stage - Producing Artifacts
 categories:
-   - Pipeliens
+   - Pipelines
 description: Webhook Stage - Producing Artifacts
 type: Document
 ---
