@@ -8,7 +8,7 @@ type: Document
 ---
 05/03/2018
 
-##$ Question:
+### Question:
 Should I do a Redis `flushall` on my Redis database?
 
 ***
