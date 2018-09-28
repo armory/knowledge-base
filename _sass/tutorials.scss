@@ -24,6 +24,7 @@
 
   h3 {
     text-transform:capitalize;
+    text-decoration: underline;
   }
 
   @media #{$mid-point} {
@@ -154,7 +155,6 @@
 
     article {
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
     }
 
