@@ -2,7 +2,7 @@
 date: 2018-07-18
 title: Using Github Artifacts as a Pipeline Trigger
 categories:
-   - pipelines
+   - Pipelines
 description: Using Github Artifacts as a Pipeline Trigger
 type: Document
 ---
