@@ -22,20 +22,20 @@ _`NAMESPACE` is the Kubernetes namespace where your Spinnaker install is located
 $ export NAMESPACE={namespace}
 $ kubectl expose service -n ${NAMESPACE} spin-gate --type LoadBalancer \
 	--port 8084 \
-	--targetPort 8084 \
+	--target-port 8084 \
 	--name spin-gate-public
 $ kubectl expose service -n ${NAMESPACE} spin-deck --type LoadBalancer \
 	--port 9000 \
-	--targetPort 9000 \
-	--name spin-gate-public
+	--target-port 9000 \
+	--name spin-deck-public
 ```
 
 Once these Services have been created, we'll need to update our Spinnaker deployment so that the UI understands where the API is located. To do this, we'll use Halyard to override the base URL for both the API and the UI and then redeploy Spinnaker.
 
 ```
 $ export NAMESPACE={namespace}
-$ export API_URL=$(kubectl get svc -n $NAMESPACE spin-gate-public -o jsonpath='{.status.loadBalancer.ingress[0].hostname)
-$ export UI_URL=$(kubectl get svc -n $NAMESPACE spin-deck-public -o jsonpath='{.status.loadBalancer.ingress[0].hostname)
+$ export API_URL=$(kubectl get svc -n $NAMESPACE spin-gate-public -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+$ export UI_URL=$(kubectl get svc -n $NAMESPACE spin-deck-public -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 $ hal config security api edit --override-base-url http://${API_URL}:8084
 $ hal config security ui edit --override-base-url http://${UI_URL}:9000
 $ hal deploy apply
