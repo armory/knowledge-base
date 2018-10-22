@@ -50,10 +50,15 @@ curl -X POST http://igor_address_port/admin/pollers/fastforward/help
 }
 ```
 
-- If this happens often, then you may want to change limits to something higher. In your `igor-local.yml` add:
+- If this happens often, then you may want to change limits to something higher, or pollIntervals to something lower.
 
+In your `igor-local.yml`, add and change the values:
 ```yml
-spinnaker.pollingSafeguard.itemUpperThreshold: 1000  # some number bigger than your current limits
+spinnaker:
+  build:
+    pollInterval: 30  # in seconds for all monitors
+    pollingSafeguard:
+       itemUpperThreshold: 1000  # change your limits for all monitors
 ```
 
 
