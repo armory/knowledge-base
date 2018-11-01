@@ -33,11 +33,43 @@ It is possible to deploy an ingress resource in the same way you can deploy any 
 [https://www.spinnaker.io/reference/providers/kubernetes-v2/#services-ingresses](https://www.spinnaker.io/reference/providers/kubernetes-v2/#services-ingresses)
 
 ## Can V1 kube and V2 kube live on the same cluster?
-Yes. However, in the Spinnaker UI you will see every K8s resource twice. Once, when the V1 provider sees it, and once, when the V2 provider sees it.
+Yes. However, in the Spinnaker UI you will see every Kubernetes resource twice. Once, when the V1 provider sees it, and once, when the V2 provider sees it.
 
+## is it possible to apply secrets using https://github.com/futuresimple/helm-secrets?
+Today that is not possible.
 
+## How do we handle deployment in multiples cluster? For example, if our environment includes more than one Kubernetes cluster
+With the account concept in Kubernetes, an account is just a Kubernetes cluster, when you configure an account you configure it to use an specific kubeconfig file, this defines how we communicate and authenticate on our clusters, if you have multiple clusters you can configure multiple accounts within Spinnaker using different kubeconfig files that have the address for the API, when you set the deployment step you setup a different account to deploy to and Spinnaker will use the credentials found in the kubeconfig.
 
+## There are two different types of pipelines : Startegy and Pipeline , what's the difference.
+A pipeline is generally just the way your application rolls out, that would be like saying deploying to a particular environment Manual Judgment deploying into another, we do things like kicking of Jenkins jobs. Strategy is kind of a way of taking all of the different pieces of that pipeline and being able to select them as a way you want to deploy. 
 
+## It seems that Spinnaker is polling data from Kubernetes. How often is this data refreshed?
+By default Spinnaker tries to pull every 30 seconds, but you can configure this time.
 
+## How's the performance of Spinnaker when it's keeping track of hundreds of pipelines?
+Spinnaker was built to run at scale, hundreds of pipelines are safe with Spinnaker, but that comes with the caviat that you have to manage and scale Spinnaker components. We have a guide at [spinnaker.io](https://spinnaker.io) that describes which components can scale horizontally, depending on your workload. In the case of pipelines, there is a component called Front50 and you can add more replicas to prevent issues with large numbers of pipelines.
 
+## is the V2 provider still in beta and subject to significant changes?
+Release 1.10 sees this provider out of Beta, but there are still many large features that will get added to the provider. For example Traffic Management for Red/Black, Rolling Red/Black, Canary, etc. Also added label manipulation and Istio.
+Changes to the Managed Pipeline Templates to allow operators to define custom pipelines that the users can use insted of the users making pipelines by hand over and over again.
+Artifact provenance for software supply chain management, this will allow you to ask questions like, which commitment made into production since the last release, what changes in my config map trigger this release.
 
+## Any plans to move from kubectl to Kubernetes APIs?
+There is no plans at the moment, one of the reasons we use kubectl, specially for deployment is that there is some merging logic that is built into kubectl that we are taking advantage of, so the primary way that the people interact with the Kubernetes API today is through kubectl.
+As it stands using any of the APIs beside the oficial one and kubectl is very dificult and odds they are largely unsupported.
+
+## Can the manifests be uploaded using a Spinnaker API?
+The best practice is to store them outside the pipeline. If you want to do it inline you will not upload the manifests to Spinnaker, what you would do be to upload the pipeline which will contain those manifests. You can upload a task saying, deploy this manifests to the Spinnaker API, if you have the manifests in mind and you have it´s representation, you can send that to Spinnaker to deploy it.
+
+## Or with a pull model, can the dev and prod stages call a service or CLI to pull the appropriate manifest(s) for their env?
+The manifest can come from different places, GitHub, GitLab, S3.
+
+## Is Force Cashe Refresh duration dependent to the number of objects in manifest of stage? I mean, number of objects in manifest of stage might increase the duration?
+The Force Cashe Refresh task in the deploy stage is basically making sure that after it has submitted everything that the Spinnaker orchrestation engine has an aqcurate view of what´s happening on Kubernetes. So Spinnaker tries as much as possible to read from it´s cashe the reason being, with the number of clients that will be looking at Spinnaker UI for example you will have thoundsands and thoundsands of requests duplicated against the server, so everything tries to read at that Cashe as most as possible, the issue of course is updating that Cashe it´s tricky because you have a lot of different compiting mechanismn making sure that things are up to date, so, when you have a lot of manifests it don´t actually add a whole lot of time to Force Cashe Refresh stage, that time is mostly dominated by how many cluster you have or how many resource are in those clusters in the first place when Spinnaker is indexing them because everytime it´s rerhesing the Cashe, it has to look at all the resources in all the cluster and then take any updates that happened like during deployment and the more resources you have the longer that step takes.
+
+## For helm charts usage is there a way to locally test the bake process?
+Helm bakes the same way that Spinnaker does it, we just use helm template under the hood, it´s a subcommand within the top level helm command, if you have a chart you want to see how it will be rendered with Spinnaker you can just run that with helm template, you can search more infomation on their page helm.sh.
+
+## Can we use ChartMuseum with Spinnaker instead of putting Helm charts to S3?
+Absolutely, ChartMuseum is effectivily just an http server, managing Helm charts is easier but in the end it´s just an http server. As long as you can configure ChartMuseum at an end point you can configure Spinnaker to pull that chart of of ChartMuseum, the main thing that you need to remember is that whaterver is serving your charts just needs to send them back as a tarball.
