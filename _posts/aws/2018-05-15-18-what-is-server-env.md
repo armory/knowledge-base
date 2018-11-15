@@ -16,7 +16,7 @@ type: Document
 ***
 
 ### Answer:
-When [udf is enabled for aws](https://www.spinnaker.io/setup/features/user-data/#aws) for example, Spinnaker will inject server information into the **user data** during an execution of a deploy stage of an application. This information will end up in into `/etc/default/server-env`.
+When udf is enabled, [such as for aws](https://www.spinnaker.io/setup/features/user-data/#aws), Spinnaker will inject server information into the **user data** during an execution of a deploy stage of an application. This information will end up in into `/etc/default/server-env`.
 If we have an application called `armoryspinnaker-prod-nonpolling`, it'll look something like:
 ```bash
 $ cat /etc/default/server-env
