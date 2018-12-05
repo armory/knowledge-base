@@ -13,8 +13,16 @@ If you've set up OAuth2.0 authentication for your Spinnaker cluster and are seei
 hal config security authn oauth2 edit --pre-established-redirect-uri https://my-real-gate-address.com:8084/login
 ```
 
-and add/create `.hal/<profile-name>/profiles/gate-local.yml`:
+This will modify your `.hal/config` with this field:
+```yml
+  security:
+    authn:
+      oauth2:
+        client:
+          preEstablishedRedirectUri: https://my-real-gate-address.com:8084/login
+```
 
+and add/create `.hal/<deployment-name>/profiles/gate-local.yml`:
 ```yml
 server:
   tomcat:
@@ -22,3 +30,5 @@ server:
     remoteIpHeader: X-Forwarded-For
     internalProxies: .*
 ```
+
+This is also documented here: https://www.spinnaker.io/setup/security/authentication/oauth/#network-architecture-and-ssl-termination
