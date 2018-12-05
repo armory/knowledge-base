@@ -22,7 +22,7 @@ This will modify your `.hal/config` with this field:
           preEstablishedRedirectUri: https://my-real-gate-address.com:8084/login
 ```
 
-and add/create `.hal/<profile-name>/profiles/gate-local.yml`:
+and add/create `.hal/<deployment-name>/profiles/gate-local.yml`:
 ```yml
 server:
   tomcat:
