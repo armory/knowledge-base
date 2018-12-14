@@ -11,6 +11,8 @@ type: Document
 
 This is a quick 1-minute GIF showing a simplified version of the pipeline execution on display at the Armory booth at Kubecon.
 
+You can find a narrated version of this [youtube link](https://www.youtube.com/watch?v=J45FYB7EjUY)
+
 In it, we see the components of the pipeline definition:
 * A configuration tab, on which we can configure settings, triggers, and notifications for the pipeline as a whole
 * A *Kubernetes v2 Manifest* deployment stage to a "Dev" environment
