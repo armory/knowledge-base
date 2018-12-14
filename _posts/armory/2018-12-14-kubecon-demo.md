@@ -7,7 +7,7 @@ description: Spinnaker Short Demo
 type: Document
 ---
 
-![Demo GIF](https://d2ddoduugvun08.cloudfront.net/items/1I1v1z1V131s072b2f1M/%5B44726d704afab65a42b0af1b0640a8f3%5D_Armory-Kubecon-Demo.gif)
+![Demo GIF](https://d2ddoduugvun08.cloudfront.net/items/1p2q253u0q3h3A2L2v35/Armory-Kubecon-Demo-Small.gif)
 
 This is a quick 1-minute GIF showing a simplified version of the pipeline execution on display at the Armory booth at Kubecon.
 
