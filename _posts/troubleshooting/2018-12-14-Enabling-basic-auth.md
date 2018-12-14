@@ -1,6 +1,6 @@
 ---
 date: 2018-12-14
-title: Enabling Basic Auth using Halyard
+title: Enabling Basic Auth for Halyard
 categories:
    - troubleshooting
 description: Enabling basic or simple Auth using Spinnaker.
