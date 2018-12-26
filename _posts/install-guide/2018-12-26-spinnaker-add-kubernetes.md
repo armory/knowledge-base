@@ -18,6 +18,8 @@ This document will guide you through the following:
 * Create a minified kubeconfig containing only the service account
 * Adding the account to Spinnaker
 
+**This whole document should be followed from within the halyard container or machine where halyard is running**
+
 ## Set up bash parameters
 
 First, we'll set up bash environment variables that will be used by later commands
@@ -28,7 +30,7 @@ First, we'll set up bash environment variables that will be used by later comman
 export CONTEXT="aws-armory-dev"
 
 # Enter the namespace that you want to deploy to.  This can already exist, or can be created.
-export NAMESPACE="spinnaker-target-deleteafter-20181230"
+export NAMESPACE="spinnaker-target-namespace"
 
 # Enter the name of the service account you want to create.  This will be created in the target namespace
 export SERVICE_ACCOUNT_NAME="spinnaker"
@@ -37,7 +39,7 @@ export SERVICE_ACCOUNT_NAME="spinnaker"
 export ROLE_NAME="spinnaker-role"
 
 # Enter the name you want Spinnaker to use to identify the deployment target
-export ACCOUNT_NAME="dev-target"
+export ACCOUNT_NAME="spinnaker-target"
 ```
 
 ## Create namespace (if it does not exist)
@@ -163,10 +165,11 @@ You should copy the kubeconfig to a place accessible to halyard; this choice is 
 
 ```bash
 # Feel free to reference a different location
-KUBECONFIG_DIRECTORY="~/.secret/"
+KUBECONFIG_DIRECTORY=~/.secret/
 cp ${KUBECONFIG_FILE} ${KUBECONFIG_DIRECTORY}
+export KUBECONFIG_FULL=$(realpath ${KUBECONFIG_DIRECTORY}${KUBECONFIG_FILE})
 
-# Enable the kubernetes provider - is probably already be enabled, if Spinnaker is installed in Kubernetes
+# Enable the kubernetes provider - this is probably already be enabled, if Spinnaker is installed in Kubernetes
 hal config provider kubernetes enable
 # Enable artifacts; not strictly neccessary for Kubernetes but will be useful in general
 hal config features edit --artifacts true
@@ -174,7 +177,7 @@ hal config features edit --artifacts true
 # Add account
 hal config provider kubernetes account add ${ACCOUNT_NAME} \
   --provider-version v2 \
-  --kubeconfig-file ${KUBECONFIG_FILE} \
+  --kubeconfig-file ${KUBECONFIG_FULL} \
   --namespaces ${NAMESPACE}
 
 # Apply changes
