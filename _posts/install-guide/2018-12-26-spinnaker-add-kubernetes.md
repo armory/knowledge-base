@@ -163,7 +163,7 @@ You should copy the kubeconfig to a place accessible to halyard; this choice is 
 
 ```bash
 # Feel free to reference a different location
-KUBECONFIG_DIRECTORY="~/secrets/"
+KUBECONFIG_DIRECTORY="~/.secrets/"
 cp ${KUBECONFIG_FILE} ${KUBECONFIG_DIRECTORY}
 
 # Enable the kubernetes provider - is probably already be enabled, if Spinnaker is installed in Kubernetes
