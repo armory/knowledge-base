@@ -229,7 +229,7 @@ rm ${KUBECONFIG_FILE}.tmp
 ```
 
 ### Add the kubeconfig and cloud provider to Spinnaker
-You should copy the kubeconfig to a place accessible to halyard; this choice is left to the reader, but one option is `~/.secrets/`, which should be mounted into your halyard container
+You should copy the kubeconfig to a place accessible to halyard; this choice is left to the reader, but one option is `~/.secret/`, which should be mounted into your halyard container.
 
 *Do this in the halyard container*
 
@@ -253,7 +253,7 @@ hal config provider kubernetes account add ${ACCOUNT_NAME} \
 
 ## Configure Halyard to install Spinnaker in Kubernetes
 
-We're going to configure halyard to install Spinnaker as distributed microservices, using the kubernetes Spinnaker account created in the previous step.
+We're going to configure halyard to install Spinnaker as distributed microservices, using the kubernetes Spinnaker account created in the previous step, in the correct namespace.
 
 ```bash
 hal config deploy edit \
@@ -344,7 +344,11 @@ hal config storage s3 edit \
     --access-key-id ${ACCESS_KEY_ID} \
     --secret-access-key \
     --region ${REGION}
+```
 
+You'll be prompted for the secret key, and the access will be validated.  Then, do this:
+
+```bash
 hal config storage edit --type s3
 ```
 
