@@ -180,3 +180,8 @@ hal config provider kubernetes account add ${ACCOUNT_NAME} \
 # Apply changes
 hal deploy apply
 ```
+
+## Done!
+After your changes get applied, you should be able to see the new Kubernetes account in your Spinnaker UI and be able to deploy to it.
+
+**Don't forget to clear your browser cache / hard refresh your browser (`cmd-shift-r` or `control-shift-r`)**
