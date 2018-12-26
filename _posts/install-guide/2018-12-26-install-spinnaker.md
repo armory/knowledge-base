@@ -1,9 +1,9 @@
 ---
 date: 2018-12-26
-title: Adding a Kubernetes (v2) Cloud Provider
+title: Installing OSS Spinnaker in Kubernetes
 categories:
    - Install Guide
-description: Adding a Kubernetes (v2) Cloud Provider
+description: Installing OSS Spinnaker in Kubernetes
 type: Document
 ---
 
@@ -73,13 +73,9 @@ Then, in a separate terminal/shell session, enter the docker container with this
 ```bash
 docker exec -it oss-halyard bash
 
-# Also, once in the container, you can run these commands for a friendlier environment:
-
-# Configure the prompt with more information
+# Also, once in the container, you can run these commands for a friendlier environment (prompt with information, alias for ls, work from home directory):
 export PS1="\h:\w \u\$ "
-# Set up an alias for ls
 alias ll='ls -alh'
-# Change to home directory
 cd ~
 ```
 
@@ -99,7 +95,7 @@ First, we'll set up bash environment variables that will be used by later comman
 export CONTEXT="aws-armory-dev"
 
 # Enter the namespace that you want to install Spinnaker in.  This can already exist, or can be created.
-export NAMESPACE="spinnaker-installation-deleteafter-20181230"
+export NAMESPACE="spinnaker-installation"
 
 # Enter the name of the service account you want to create.  This will be created in the target namespace
 export SERVICE_ACCOUNT_NAME="spinnaker"
@@ -107,7 +103,7 @@ export SERVICE_ACCOUNT_NAME="spinnaker"
 # Enter the name of the role you want to create.  This will be created in the target namespace
 export ROLE_NAME="spinnaker-role"
 
-# Enter the name you want Spinnaker to use to identify the deployment target
+# Enter the name you want Spinnaker to use to identify the cloud provider account
 export ACCOUNT_NAME="spinnaker"
 ```
 
@@ -241,6 +237,7 @@ You should copy the kubeconfig to a place accessible to halyard; this choice is 
 # Feel free to reference a different location
 KUBECONFIG_DIRECTORY=~/.secret/
 cp ${KUBECONFIG_FILE} ${KUBECONFIG_DIRECTORY}
+export KUBECONFIG_FULL=$(realpath ${KUBECONFIG_DIRECTORY}${KUBECONFIG_FILE})
 
 # Enable the Kubernetes cloud provider
 hal config provider kubernetes enable
@@ -250,7 +247,7 @@ hal config features edit --artifacts true
 # Add account
 hal config provider kubernetes account add ${ACCOUNT_NAME} \
   --provider-version v2 \
-  --kubeconfig-file ${KUBECONFIG_FILE} \
+  --kubeconfig-file ${KUBECONFIG_FULL} \
   --namespaces ${NAMESPACE}
 ```
 
@@ -387,7 +384,8 @@ kubectl get pods -n ${NAMESPACE} --watch
 
 In order to connect to your Spinnaker cluster, you can port forward directly from your workstation to your spinnaker cluster.  You must forward port 8084 to spin-gate (Spinnaker's API) and port 9000 to spin-deck (Spinnaker's UI)
 ```bash
-export NAMESPACE="spinnaker-installation-deleteafter-20181230"
+# Replace with the namespace where Spinnaker was installed
+export NAMESPACE="spinnaker-installation"
 kubectl -n=${NAMESPACE} port-forward $(kubectl -n=${NAMESPACE} get po -l=cluster=spin-deck -o=jsonpath='{.items[0].metadata.name}') 9000 &
-kubectl -n=${NAMESPACE} port-forward $(kubectl -n=${NAMESPACE} get po -l=cluster=spin-gate -o=jsonpath='{.items[0].metadata.name}') 8084
+kubectl -n=${NAMESPACE} port-forward $(kubectl -n=${NAMESPACE} get po -l=cluster=spin-gate -o=jsonpath='{.items[0].metadata.name}') 8084 &
 ```
