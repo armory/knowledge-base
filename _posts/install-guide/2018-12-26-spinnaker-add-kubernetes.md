@@ -159,11 +159,11 @@ rm ${KUBECONFIG_FILE}.tmp
 ```
 
 ## Add the kubeconfig and cloud provider to Spinnaker
-You should copy the kubeconfig to a place accessible to halyard; this choice is left to the reader, but one option is `~/.hal/dependencies/`, which should travel with halyard
+You should copy the kubeconfig to a place accessible to halyard; this choice is left to the reader, but one option is `~/.secrets/`, which should be mounted into your halyard container
 
 ```bash
 # Feel free to reference a different location
-KUBECONFIG_DIRECTORY="~/.hal/dependencies/"
+KUBECONFIG_DIRECTORY="~/secrets/"
 cp ${KUBECONFIG_FILE} ${KUBECONFIG_DIRECTORY}
 
 # Enable the kubernetes provider - is probably already be enabled, if Spinnaker is installed in Kubernetes
