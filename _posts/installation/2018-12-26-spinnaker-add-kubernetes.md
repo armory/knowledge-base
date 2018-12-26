@@ -2,7 +2,7 @@
 date: 2018-12-26
 title: Adding a Kubernetes (v2) Cloud Provider
 categories:
-   - Install Guide
+   - Installation
 description: Adding a Kubernetes (v2) Cloud Provider
 type: Document
 ---
