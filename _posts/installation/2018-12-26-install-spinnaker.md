@@ -2,7 +2,7 @@
 date: 2018-12-26
 title: Installing OSS Spinnaker in Kubernetes
 categories:
-   - Install Guide
+   - Installation
 description: Installing OSS Spinnaker in Kubernetes
 type: Document
 ---
