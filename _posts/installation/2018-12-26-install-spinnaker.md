@@ -63,7 +63,10 @@ Then, in a separate terminal/shell session, enter the docker container with this
 ```bash
 docker exec -it oss-halyard bash
 
-# Also, once in the container, you can run these commands for a friendlier environment (prompt with information, alias for ls, work from home directory):
+# Also, once in the container, you can run these commands for a friendlier environment to:
+# - prompt with information
+# - alias for ls
+# - cd to the home directory
 export PS1="\h:\w \u\$ "
 alias ll='ls -alh'
 cd ~
@@ -81,7 +84,8 @@ First, we'll set up bash environment variables that will be used by later comman
 
 ```bash
 
-# Specify the name of the kubernetes context that has permissions to create the service account in your target cluster and namespace.  To get the list of contexts, you can run "kubectl config get-contexts"
+# Specify the name of the kubernetes context that has permissions to create the service account in your
+# target cluster and namespace.  To get the list of contexts, you can run "kubectl config get-contexts"
 export CONTEXT="aws-armory-dev"
 
 # Enter the namespace that you want to install Spinnaker in.  This can already exist, or can be created.
@@ -380,6 +384,8 @@ In order to connect to your Spinnaker cluster, you can port forward directly fro
 ```bash
 # Replace with the namespace where Spinnaker was installed
 export NAMESPACE="spinnaker-installation"
-kubectl -n=${NAMESPACE} port-forward $(kubectl -n=${NAMESPACE} get po -l=cluster=spin-deck -o=jsonpath='{.items[0].metadata.name}') 9000 &
-kubectl -n=${NAMESPACE} port-forward $(kubectl -n=${NAMESPACE} get po -l=cluster=spin-gate -o=jsonpath='{.items[0].metadata.name}') 8084 &
+kubectl -n=${NAMESPACE} port-forward \
+    $(kubectl -n=${NAMESPACE} get po -l=cluster=spin-deck -o=jsonpath='{.items[0].metadata.name}') 9000 &
+kubectl -n=${NAMESPACE} port-forward \
+    $(kubectl -n=${NAMESPACE} get po -l=cluster=spin-gate -o=jsonpath='{.items[0].metadata.name}') 8084 &
 ```

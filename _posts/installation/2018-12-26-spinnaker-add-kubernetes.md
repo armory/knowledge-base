@@ -26,19 +26,20 @@ First, we'll set up bash environment variables that will be used by later comman
 
 ```bash
 
-# Specify name of the kubernetes context that has permissions to create the service account in your target cluster and namespace.  To get the list of contexts, you can run "kubectl config get-contexts"
+# Specify the name of the kubernetes context that has permissions in your target cluster and namespace
+# to create the service account.  To get context names, you can run "kubectl config get-contexts".
 export CONTEXT="aws-armory-dev"
 
 # Enter the namespace that you want to deploy to.  This can already exist, or can be created.
 export NAMESPACE="spinnaker-target-namespace"
 
-# Enter the name of the service account you want to create.  This will be created in the target namespace
+# Enter the name of the service account you want to create in the target namespace.
 export SERVICE_ACCOUNT_NAME="spinnaker"
 
-# Enter the name of the role you want to create.  This will be created in the target namespace
+# Enter the name of the role you want to create in the target namespace.
 export ROLE_NAME="spinnaker-role"
 
-# Enter the name you want Spinnaker to use to identify the deployment target
+# Enter the account name you want Spinnaker to use to identify the deployment target.
 export ACCOUNT_NAME="spinnaker-target"
 ```
 
@@ -134,7 +135,8 @@ TOKEN_DATA=$(kubectl get secret ${SECRET_NAME} \
   --namespace ${NAMESPACE} \
   -o jsonpath='{.data.token}')
 
-# This is necessary to handle both OSX and bash base64, which have different flags - any errors on the first command can be ignored
+# This is necessary to handle both OSX and bash base64, which have different flags
+# Any errors on the first command can be ignored
 TOKEN=$(echo ${TOKEN_DATA} | base64 -d)
 if [[ ! $? -eq 0 ]]; then TOKEN=$(echo ${TOKEN_DATA} | base64 -D); fi
 
