@@ -69,7 +69,7 @@ alias ll='ls -alh'
 cd ~
 ```
 
-## Create a service account with with to install Spinnaker
+## Create a service account with which to install Spinnaker
 
 Halyard will install Spinnaker in your Kubernetes cluster; it is a good idea to have a dedicated service account for Halyard to use to interact with your Kubernetes cluster.  First, we'll create the namespace where Spinnaker will live, and then create a service account and permissions to install Spinnaker into that namespace.
 
