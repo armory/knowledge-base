@@ -43,18 +43,6 @@ cp -r ~/.aws .
 cp -r ~/.kube .
 ```
 
-If you're running Docker on a local workstation, you can forward several ports so that you can connect to your Spinnaker cluster directly
-```bash
-# Start the Docker container (with port forwarding)
-docker run --name oss-halyard -it --rm \
-  -v ${PWD}/.hal:/home/spinnaker/.hal \
-  -v ${PWD}/.kube:/home/spinnaker/.kube \
-  -v ${PWD}/.aws:/home/spinnaker/.aws \
-  -v ${PWD}/.secret:/home/spinnaker/.secret \
-  -p 8084:8084 \
-  -p 9000:9000 \
-  gcr.io/spinnaker-marketplace/halyard:stable
-```
 
 If you're running Docker on a remote workstation, run the container without the port forwards:
 ```bash
