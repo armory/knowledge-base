@@ -46,7 +46,7 @@ cp -r ~/.kube .
 ```
 
 
-If you're running Docker on a remote workstation, run the container without the port forwards:
+Run the container:
 ```bash
 # Start the Docker container (without port forwarding)
 docker run --name oss-halyard -it --rm \
