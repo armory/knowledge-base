@@ -15,7 +15,7 @@ This document will guide you through the initial installation of Open Source Spi
 * Using an S3 bucket as the configuration store
 * Installed via Halyard, run as a Docker container
 
-We'll do this by starting a halyard docker container (with a container name of `oss-halyard`), and then interacting with the halyard daemon in that container from another shell session.
+We'll do this by starting a Halyard docker container (with a container name of `oss-halyard`), and then interacting with the Halyard daemon in that container from another shell session.
 
 Later articles may cover the following:
 
@@ -26,11 +26,11 @@ Later articles may cover the following:
 
 **If you're using Armory Spinnaker, a lot of the items in this document are handled automatically for you**
 
-## Start the halyard container
+## Start the Halyard container
 
 Halyard can be run directly on a Linux machine or on OSX, but is somewhat more portable in a Docker container.  In order to to this, you should directly mount three directories into your docker container, and it's useful to have these directories accessible from a single location.  I'm also adding an additional directory for convenience, to store sensitive information passed to Spinnaker (Spinnaker secrets will be forthcoming):
 
-* `.hal` (where all halyard-specific configurations are stored)
+* `.hal` (where all Halyard-specific configurations are stored)
 * `.aws` (where AWS credentials, specifically for S3, are stored)
 * `.kube` (where kubeconfigs are stored)
 * `.secret` (where other sensitive information is stored)
@@ -69,13 +69,13 @@ cd ~
 
 ## Create a service account with with to install Spinnaker
 
-Halyard will install Spinnaker in your Kubernetes cluster; it is a good idea to have a dedicated service account for halyard to use to interact with your Kubernetes cluster.  First, we'll create the namespace where Spinnaker will live, and then create a service account and permissions to install Spinnaker into that namespace.
+Halyard will install Spinnaker in your Kubernetes cluster; it is a good idea to have a dedicated service account for Halyard to use to interact with your Kubernetes cluster.  First, we'll create the namespace where Spinnaker will live, and then create a service account and permissions to install Spinnaker into that namespace.
 
 ### Set up bash parameters in the container
 
 First, we'll set up bash environment variables that will be used by later commands
 
-*Do this in the halyard container*
+*Do this in the Halyard container*
 
 ```bash
 
@@ -99,7 +99,7 @@ export ACCOUNT_NAME="spinnaker"
 
 If the namespace does not exist, you can create it.
 
-*Do this in the halyard container*
+*Do this in the Halyard container*
 
 ```bash
 kubectl --context ${CONTEXT} create ns ${NAMESPACE}
@@ -110,7 +110,7 @@ kubectl --context ${CONTEXT} create ns ${NAMESPACE}
 Create a Kubernetes manifest that contains the service account, role, and rolebinding.
 *Note that this may not have all necessary permissions, depending on what you're deploying - feel free to add additional permissions to this account as neccessary*
 
-*Do this in the halyard container*
+*Do this in the Halyard container*
 
 ```bash
 # Create the file
@@ -142,7 +142,7 @@ rules:
 - apiGroups: ["extensions", "apps"]
   resources: ["deployments", "replicasets", "ingresses"]
   verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
-# These permissions are necessary for halyard to operate. We use this role also to deploy Spinnaker itself.
+# These permissions are necessary for Halyard to operate. We use this role also to deploy Spinnaker itself.
 - apiGroups: [""]
   resources: ["services/proxy", "pods/portforward"]
   verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
@@ -176,7 +176,7 @@ kubectl --context ${CONTEXT} apply -f ${NAMESPACE}-service-account.yml
 
 In order for Spinnaker to talk to a Kubernetes cluster, it must be provided a kubeconfig.  We're going to create a trimmed-down kubeconfig that only has the service account and token.
 
-*Do this in the halyard container*
+*Do this in the Halyard container*
 
 ```bash
 #################### Create minified kubeconfig
@@ -217,9 +217,9 @@ rm ${KUBECONFIG_FILE}.tmp
 ```
 
 ### Add the kubeconfig and cloud provider to Spinnaker
-You should copy the kubeconfig to a place accessible to halyard; this choice is left to the reader, but one option is `~/.secret/`, which should be mounted into your halyard container.
+You should copy the kubeconfig to a place accessible to Halyard; this choice is left to the reader, but one option is `~/.secret/`, which should be mounted into your Halyard container.
 
-*Do this in the halyard container*
+*Do this in the Halyard container*
 
 ```bash
 # Feel free to reference a different location
@@ -241,7 +241,7 @@ hal config provider kubernetes account add ${ACCOUNT_NAME} \
 
 ## Configure Halyard to install Spinnaker in Kubernetes
 
-We're going to configure halyard to install Spinnaker as distributed microservices, using the kubernetes Spinnaker account created in the previous step, in the correct namespace.
+We're going to configure Halyard to install Spinnaker as distributed microservices, using the kubernetes Spinnaker account created in the previous step, in the correct namespace.
 
 ```bash
 hal config deploy edit \
@@ -314,11 +314,11 @@ Spinnaker needs a place to store persistent configurations.  This can be in an S
 1. Click "Create user"
 1. Make sure to save the access key ID and Secret access key
 
-### Configure halyard to use the bucket
+### Configure Halyard to use the bucket
 
-You must add the access key id and secret access key to the halyard configuration, and configure halyard to configure Spinnaker to use the bucket.
+You must add the access key id and secret access key to the Halyard configuration, and configure Halyard to configure Spinnaker to use the bucket.
 
-*Do this in the halyard container*
+*Do this in the Halyard container*
 
 ```bash
 # Replace with key id
@@ -342,7 +342,7 @@ hal config storage edit --type s3
 
 ## Select the version of Spinnaker to install
 
-Before halyard will install Spinnaker, you should specify the version of Spinnaker you want to use.
+Before Halyard will install Spinnaker, you should specify the version of Spinnaker you want to use.
 
 You can get a list of available versions of spinnaker with this command:
 
@@ -360,7 +360,7 @@ hal config version edit --version $VERSION
 
 ## Install Spinnaker
 
-Now that your halconfig is completely configured for the initial Spinnaker, you can tell halyard to actually install Spinnaker:
+Now that your halconfig is completely configured for the initial Spinnaker, you can tell Halyard to actually install Spinnaker:
 
 ```bash
 hal deploy apply
