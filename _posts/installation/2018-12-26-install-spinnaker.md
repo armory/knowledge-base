@@ -30,7 +30,7 @@ Later articles may cover the following:
 
 ## Start the Halyard container
 
-Halyard can be run directly on a Linux machine or on OSX, but is somewhat more portable in a Docker container.  In order to to this, you should directly mount three directories into your docker container, and it's useful to have these directories accessible from a single location.  I'm also adding an additional directory for convenience, to store sensitive information passed to Spinnaker (Spinnaker secrets will be forthcoming):
+Halyard can be run directly on a Linux machine or on OSX, but is somewhat more portable in a Docker container.  In order to to this, you should directly mount three directories into your docker container. It's useful to have these directories accessible from a shared root.  We also recommend adding an additional directory to store sensitive information passed to Spinnaker (Spinnaker secret management forthcoming):
 
 * `.hal` (where all Halyard-specific configurations are stored)
 * `.aws` (where AWS credentials, specifically for S3, are stored)
