@@ -7,7 +7,9 @@ description: Installing OSS Spinnaker in Kubernetes
 type: Document
 ---
 
-# Installing Spinnaker
+_Note: If you're using Armory Spinnaker, a lot of the items in this document are handled automatically for you._
+
+## Installing Spinnaker
 
 This document will guide you through the initial installation of Open Source Spinnaker, in the following environment:
 
@@ -24,7 +26,7 @@ Later articles may cover the following:
 * Adding a Kubernetes account ([document here](2018-12-26-spinnaker-add-kubernetes.md))
 * Adding an AWS account
 
-**If you're using Armory Spinnaker, a lot of the items in this document are handled automatically for you**
+
 
 ## Start the Halyard container
 
