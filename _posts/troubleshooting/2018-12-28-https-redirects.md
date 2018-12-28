@@ -19,7 +19,7 @@ Then you'll likely get two invalid redirects - one to your gate address on HTTP 
 
 There are a number of ongoing projects to improve this behavior (for example, when working with OAuth2.0, you can specify a `preEstablishedRedirectUri` via the `--pre-established-redirect-uri` flag). 
 
-In the interim, you can work around this issue by putting a self-signed certificate on Deck and Gate.  This requires three steps:
+In the interim, you can work around this issue by putting a self-signed certificate on Deck and Gate.  This requires two steps:
 
 1. Create self-signed certificates for Deck (in `pem` format) and Gate (in `jks` format), and configure them to use them.  You can follow the official documentation for this [here](https://www.spinnaker.io/setup/security/authentication/ssl/).
 1. Configure your load balancer to communicate with your backend with HTTPS rather than HTTP.  The method of achieving this will depend on your load balancer configuration.
