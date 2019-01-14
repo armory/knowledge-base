@@ -29,6 +29,7 @@ server:
     protocolHeader: X-Forwarded-Proto
     remoteIpHeader: X-Forwarded-For
     internalProxies: .*
+    httpsServerPort: X-Forwarded-Port
 ```
 
 This is also documented here: https://www.spinnaker.io/setup/security/authentication/oauth/#network-architecture-and-ssl-termination
