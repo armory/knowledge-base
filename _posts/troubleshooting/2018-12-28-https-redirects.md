@@ -17,7 +17,22 @@ For example, if you have LDAP set up and the following flow:
 
 Then you'll likely get two invalid redirects - one to your gate address on HTTP and one on your deck address on HTTP.  This is regardless of your `override-base-url` settings.
 
-There are a number of ongoing projects to improve this behavior (for example, when working with OAuth2.0, you can specify a `preEstablishedRedirectUri` via the `--pre-established-redirect-uri` flag). 
+One option to try is to add/create `.hal/<deployment-name>/profiles/gate-local.yml`:
+
+```yml
+server:
+  tomcat:
+    protocolHeader: X-Forwarded-Proto
+    remoteIpHeader: X-Forwarded-For
+    internalProxies: .*
+    httpsServerPort: X-Forwarded-Port
+```
+
+(Then run `hal deploy apply`, and clear / update your cache).
+
+Alternately, you can do the following:
+
+There are a number of ongoing projects to improve this behavior (for example, when working with OAuth2.0, you can specify a `preEstablishedRedirectUri` via the `--pre-established-redirect-uri` flag).
 
 In the interim, you can work around this issue by putting a self-signed certificate on Deck and Gate.  This requires two steps:
 
