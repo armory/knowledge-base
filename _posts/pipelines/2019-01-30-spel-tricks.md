@@ -15,14 +15,14 @@ Here are a couple of the more interesting examples that we've come across (this 
 Taking the number of current instances of a given Deployment and scaling it by some non-integer value, where `Get Deployment` is a "Find Artifacts from Resource (Manifest)" (`findArtifactsFromResource`) stage that looks at a Kubernetes `deployment` object:
 
 ```java
-${ (0.8 * #stage("Get Deployment")["outputs"]["manifest"]["spec"]["replicas"]).intValue()}
+${ (0.8 * #stage("Get Deployment")["outputs"]["manifest"]["spec"]["replicas"]).intValue() }
 ```
 
 #### Using JSON and #readJson to create parameter aliases
 1) create a parameter `environment` with 3 options (`development`, `staging`, `production`)
 2) create a parameter `short_env_name` with the default value of `${#readJson('{"development": "dev", "staging": "stag", "production":"prod"}')}`
 
-When you need to short name, you can just reference it like so `${parameters.short_env_name[parameters.environment]}`
+When you need to short name, you can just reference it like this: `${parameters.short_env_name[parameters.environment]}`
 
 
 #### Using a ternary operator to condition something on current state:
