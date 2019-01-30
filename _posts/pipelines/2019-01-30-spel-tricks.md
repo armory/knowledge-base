@@ -11,11 +11,18 @@ Spinnaker uses the Spring Expression Language (SpEL) for pipeline expressions, s
 
 Here are a couple of the more interesting examples that we've come across (this page will grow):
 
-#### Using JSON and a Map to shorten variable names
+#### Basic Math
+Taking the number of current instances of a given Deployment and scaling it by some non-integer value, where `Get Deployment` is a "Find Artifacts from Resource (Manifest)" (`findArtifactsFromResource`) stage that looks at a Kubernetes `deployment` object:
+
+```java
+${ (0.8 * #stage("Get Deployment")["outputs"]["manifest"]["spec"]["replicas"]).intValue()}
+```
+
+#### Using JSON and #readJson to create parameter aliases
 1) create a parameter `environment` with 3 options (`development`, `staging`, `production`)
 2) create a parameter `short_env_name` with the default value of `${#readJson('{"development": "dev", "staging": "stag", "production":"prod"}')}`
 
-when you need to short name, you can just reference it like so `${parameters.short_env_name[parameters.environment]}`
+When you need to short name, you can just reference it like so `${parameters.short_env_name[parameters.environment]}`
 
 
 #### Using a ternary operator to condition something on current state:
@@ -24,8 +31,13 @@ Ternary operator:
 <some-condition> ? <value-if-true> : <value-if-false>
 ```
 
-Example (in the text of a Manual Judgement stage):
+Simple example:
+```java
+${ true ? "True text" : "False text" }
 ```
-You can check the status of the application here: <a href='${ #stage("Get Ingress")["outputs"]["manifest"]["status"]["loadBalancer"].containsKey("ingress") ?
-"http://" + #stage("Get Ingress")["outputs"]["manifest"]["status"]["loadBalancer"]["ingress"][0]["hostname"] + "/api" : "https://spinnaker.sales.armory.io/#/applications/demoapp/loadBalancers"}'>Demo App</a>.
+
+
+Example (in the text of a Manual Judgement stage), where `Get Service` is a "Find Artifacts From Resource (Manifest)" (`findArtifactsFromResource`) that looks at a Kubernetes `service` object:
+```
+The loadBalancer ingress is ${ #stage("Get Service")["outputs"]["manifest"]["status"]["loadBalancer"].containsKey("ingress") ? "ready" : "not ready" }.
 ```
