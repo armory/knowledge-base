@@ -18,13 +18,13 @@ Here are a couple of the more interesting examples that we've come across (this 
 when you need to short name, you can just reference it like so `${parameters.short_env_name[parameters.environment]}`
 
 
-#### Using a ternary operator based on whether a manifest contains a specific item:
+#### Using a ternary operator to condition something on current state:
 Ternary operator:
 ```java
 <some-condition> ? <value-if-true> : <value-if-false>
 ```
 
-Example
+Example (in the text of a Manual Judgement stage):
 ```
 You can check the status of the application here: <a href='${ #stage("Get Ingress")["outputs"]["manifest"]["status"]["loadBalancer"].containsKey("ingress") ?
 "http://" + #stage("Get Ingress")["outputs"]["manifest"]["status"]["loadBalancer"]["ingress"][0]["hostname"] + "/api" : "https://spinnaker.sales.armory.io/#/applications/demoapp/loadBalancers"}'>Demo App</a>.
