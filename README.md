@@ -5,7 +5,7 @@ There are default examples of both video and document in the repo called [video_
 
 ## Features
 
-* Tutorials organised by category
+* Tutorials organized by category
 * Two types of tutorials - text and video
 * Ability to have a "tutorial series"
 * FAQ section
@@ -42,7 +42,7 @@ Install the [Livereload chrome extension](https://chrome.google.com/webstore/det
 
 ## Editing
 
-Base is already optimised for adding, updating and removing tutorials, navigation, footer and FAQ information in CloudCannon.
+Base is already optimized for adding, updating and removing tutorials, navigation, footer and FAQ information in CloudCannon.
 
 The sticky sidebar in tutorials in populated by pulling out `<h2>` elements from the content.
 
@@ -50,13 +50,13 @@ The sticky sidebar in tutorials in populated by pulling out `<h2>` elements from
 ### Posts
 
 * Add, update or remove a post in the *Posts* collection.
-* The tutorials page is organised by categories.
+* The tutorials page is organized by categories.
 * Change the defaults when new posts are created in `_posts/_defaults.md`.
 
 ### Lets break it down a little more
 There are two primary posts types, Document and Video. 
 
-An important part of the orginization of the posts for both documents and videos is the metadata at the top of the file. Breaking down what each field means.
+An important part of the organization of the posts for both documents and videos is the metadata at the top of the file. Breaking down what each field means.
 
 - date: the publishing date, it **will not** show up to the end user, used for SEO
 
@@ -66,15 +66,15 @@ An important part of the orginization of the posts for both documents and videos
 
 
 ### Example of a category
-categoies: *Are ways to organize similar content*
+categories: *Are ways to organize similar content*
 
-cateogory: Kubernetes
+category: Kubernetes
 
 ![Category Screenshot](https://dha4w82d62smt.cloudfront.net/items/0k3T1V372L193C0x1y3F/%5Bd2bdba30dd8aee222e7511abd5a338f6%5D_Image%25202018-04-19%2520at%25209.12.47%2520PM.png?X-CloudApp-Visitor-Id=3010088&v=f0daac9e)
 
 
 ### Example of a type
-type: *Determins what icon is next to your post (Document or Video)*
+type: *Determines what icon is next to your post (Document or Video)*
 
 ![Type Screenshot](https://dha4w82d62smt.cloudfront.net/items/1y0W262h1O1b2o3a0m0c/%5Ba6426540b975b5cec5dbfeab5f60eded%5D_Image%25202018-04-20%2520at%25209.46.12%2520AM.png?X-CloudApp-Visitor-Id=3010088&v=31718d5c)
     
@@ -92,7 +92,7 @@ To create a new series:
 * Set the `title` and `description`.
 
 To add a tutorial/post to a series:
-* Add a `set` field to the tutorial front matter which points to the file name of the desired set without the `.md` extention. e.g. If I have a set at `_sets/getting-started.md` I would use this in my tutorial front matter: `set: getting-started`.
+* Add a `set` field to the tutorial front matter which points to the file name of the desired set without the `.md` extension. e.g. If I have a set at `_sets/getting-started.md` I would use this in my tutorial front matter: `set: getting-started`.
 * Add a `set_order` field to the tutorial front matter and specify a number. This is the tutorials order in the set.
 
 ### Navigation
