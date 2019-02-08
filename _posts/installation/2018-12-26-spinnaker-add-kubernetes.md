@@ -25,13 +25,15 @@ This document will guide you through the following:
 First, we'll set up bash environment variables that will be used by later commands
 
 ```bash
-
 # Specify the name of the kubernetes context that has permissions in your target cluster and namespace
 # to create the service account.  To get context names, you can run "kubectl config get-contexts".
 export CONTEXT="aws-armory-dev"
 
+# Enter the namespace where you want the Spinnaker service account to live
+export NAMESPACE="spinnaker-system"
+
 # Enter the namespace that you want to deploy to.  This can already exist, or can be created.
-export NAMESPACE="spinnaker-target-namespace"
+export TARGET_NAMESPACES=(namespace-1 namespace-2)
 
 # Enter the name of the service account you want to create in the target namespace.
 export SERVICE_ACCOUNT_NAME="spinnaker"
@@ -40,15 +42,21 @@ export SERVICE_ACCOUNT_NAME="spinnaker"
 export ROLE_NAME="spinnaker-role"
 
 # Enter the account name you want Spinnaker to use to identify the deployment target.
-export ACCOUNT_NAME="spinnaker-target"
+export ACCOUNT_NAME="spinnaker-dev"
 ```
 
-## Create namespace (if it does not exist)
+## Create namespace(s) (if they do not exist)
 
-If the namespace does not exist, you can create it.
+If the namespaces do not exist, you can create them.
 
 ```bash
+# Create the Spinnaker service account namespace
 kubectl --context ${CONTEXT} create ns ${NAMESPACE}
+
+# Create the target namespaces
+for TARGET_NS in ${TARGET_NAMESPACES[@]}; do
+   kubectl --context ${CONTEXT} create ns ${TARGET_NS}
+done
 ```
 
 ## Create the service account and credentials
@@ -57,19 +65,22 @@ Create a Kubernetes manifest that contains the service account, role, and rolebi
 *Note that this may not have all necessary permissions, depending on what you're deploying - feel free to add additional permissions to this account as neccessary*
 
 ```bash
-# Create the file
+# Create the service account manifest
 tee ${NAMESPACE}-service-account.yml <<-'EOF'
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: SERVICE_ACCOUNT_NAME
   namespace: NAMESPACE
----
+EOF
+
+# Create template for roles/rolebinding manifests
+tee service-account-template.yml <<-'EOF'
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: ROLE_NAME
-  namespace: NAMESPACE
+  namespace: TARGET_NS
 rules:
 - apiGroups: [""]
   resources: ["namespaces", "events", "replicationcontrollers", "serviceaccounts", "pods/log"]
@@ -101,7 +112,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: ROLE_NAME-binding
-  namespace: NAMESPACE
+  namespace: TARGET_NS
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -110,16 +121,63 @@ subjects:
 - namespace: NAMESPACE
   kind: ServiceAccount
   name: SERVICE_ACCOUNT_NAME
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: admin-ROLE_NAME
+  namespace: TARGET_NS
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: admin-ROLE_NAME-binding
+  namespace: TARGET_NS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: admin-ROLE_NAME
+subjects:
+- namespace: NAMESPACE
+  kind: ServiceAccount
+  name: SERVICE_ACCOUNT_NAME
 EOF
 
-# Do string substitution with our bash variables
+# Update the service account file
 sed -i.bak \
   -e "s/NAMESPACE/${NAMESPACE}/g" \
   -e "s/SERVICE_ACCOUNT_NAME/${SERVICE_ACCOUNT_NAME}/g" \
-  -e "s/ROLE_NAME/${ROLE_NAME}/g" \
   ${NAMESPACE}-service-account.yml
 
+# Create the service account
 kubectl --context ${CONTEXT} apply -f ${NAMESPACE}-service-account.yml
+
+# For each target namespace, stamp out a Kubernetes manifest with the role and rolebinding
+for TARGET_NS in ${TARGET_NAMESPACES[@]}; do
+  sed \
+    -e "s/NAMESPACE/${NAMESPACE}/g" \
+    -e "s/TARGET_NS/${TARGET_NS}/g" \
+    -e "s/SERVICE_ACCOUNT_NAME/${SERVICE_ACCOUNT_NAME}/g" \
+    -e "s/ROLE_NAME/${ROLE_NAME}/g" \
+    service-account-template.yml > ${TARGET_NS}-service-account.yml
+done
+
+# For each target namespace, apply the manifest
+for TARGET_NS in ${TARGET_NAMESPACES[@]}; do
+  kubectl --context ${CONTEXT} apply -f ${TARGET_NS}-service-account.yml
+done
+```
+
+Optionally, if you don't want the service accounts to have full access to the namespace(s), remove the admin role bindings:
+```bash
+for TARGET_NS in ${TARGET_NAMESPACES[@]}; do
+  kubectl --context ${CONTEXT} -n ${TARGET_NS} \
+    delete rolebinding admin-${ROLE_NAME}-binding
+done
 ```
 
 ## Create a minified kubeconfig
@@ -130,7 +188,7 @@ In order for Spinnaker to talk to a Kubernetes cluster, it must be provided a ku
 
 #################### Create minified kubeconfig
 NEW_CONTEXT=${NAMESPACE}-sa
-KUBECONFIG_FILE="kubeconfig-${NAMESPACE}-sa"
+KUBECONFIG_FILE="kubeconfig-${NAMESPACE}-${CONTEXT}-sa"
 
 SECRET_NAME=$(kubectl get serviceaccount ${SERVICE_ACCOUNT_NAME} \
   --context ${CONTEXT} \
