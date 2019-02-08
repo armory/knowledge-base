@@ -41,3 +41,13 @@ Example (in the text of a Manual Judgement stage), where `Get Service` is a "Fin
 ```
 The loadBalancer ingress is ${ #stage("Get Service")["outputs"]["manifest"]["status"]["loadBalancer"].containsKey("ingress") ? "ready" : "not ready" }.
 ```
+
+#### Getting the execution id
+```
+${execution['id']}
+```
+
+For example:
+```
+This is the execution id: ${execution['id']}
+```
