@@ -15,7 +15,9 @@ At a high level, the process to do this is as follows:
 * Update the Halconfig Spinnaker version from the OSS Spinnaker version to Armory Spinnaker
 * Deploy Armory Spinnaker, and remove any conflicting fields from your Halconfig
 
-Here are the actual steps:
+Release notes for Armory Spinnaker are available here: https://docs.armory.io/release-notes/
+
+# Running the Upgrade
 ## Back up your existing Halyard configuration
 * From your existing Halyard, run `hal backup create`.  This will create a `tar` file; make sure you store this somewhere safe and external to your Halyard machine.
 
@@ -31,7 +33,9 @@ Here are the actual steps:
         -it gcr.io/spinnaker-marketplace/halyard:stable
     ```
 
-Then you can switch to Armory Halyard by just switching out the Docker image.  For example, as of 3/15/2019, the latest image is `docker.io/armory/halyard-armory:1.3.2` (you can recent/current image tags at https://hub.docker.com/r/armory/halyard-armory/tags).  Switch to the new image with this:
+Then you can switch to Armory Halyard by just switching out the Docker image.  For example, as of 3/15/2019, the latest image is `docker.io/armory/halyard-armory:1.3.2` (you can recent/current image tags at https://hub.docker.com/r/armory/halyard-armory/tags).  
+
+* Switch to the new image with this:
 
     ```bash
     docker run --name armory-halyard --rm \
@@ -53,19 +57,19 @@ Then you can switch to Armory Halyard by just switching out the Docker image.  F
 
 In Halyard, run this command to get the latest version(s) of Armory Spinnaker:
 
-    ```bash
-    hal version list
-    ```
+```bash
+hal version list
+```
 
 Then, update your Halconfig to use the Armory Spinnaker version.  For example, if you're trying to use 2.2.0, run this:
 
-    ```bash
-    hal config version edit --version 2.2.0
-    ```
+```bash
+hal config version edit --version 2.2.0
+```
 
 ## Deploy Armory Spinnaker, and remove any conflicting fields from your Halconfig
 
-Because Armory Spinnaker is much more heavily tested than OSS Spinnaker, certain edge capabilities in OSS Spinnaker may not be available in Armory Spinnaker.
+Because Armory Spinnaker is much more heavily tested than OSS Spinnaker, certain edge capabilities in OSS Spinnaker may not be available in Armory Spinnaker yet.
 
 You can identify these by trying to apply your change:
 
