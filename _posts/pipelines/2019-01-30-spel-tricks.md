@@ -11,43 +11,68 @@ Spinnaker uses the Spring Expression Language (SpEL) for pipeline expressions, s
 
 Here are a couple of the more interesting examples that we've come across (this page will grow):
 
-#### Basic Math
-Taking the number of current instances of a given Deployment and scaling it by some non-integer value, where `Get Deployment` is a "Find Artifacts from Resource (Manifest)" (`findArtifactsFromResource`) stage that looks at a Kubernetes `deployment` object:
+## Basic Math
+Take the number of instances for a deployment and multiply by a non-integer value:<br/>
+Note: "Get Deployment" is the name of the "Find Artifacts from Resource (Manifest)" stage that looks at a Kubernetes deployment object.<br/>
 
 ```java
 ${ (0.8 * #stage("Get Deployment")["outputs"]["manifest"]["spec"]["replicas"]).intValue() }
 ```
 
-#### Using JSON and #readJson to create parameter aliases
-1) create a parameter `environment` with 3 options (`development`, `staging`, `production`)
-2) create a parameter `short_env_name` with the default value of `${#readJson('{"development": "dev", "staging": "stag", "production":"prod"}')}`
+## <a name="helper_properties"></a>Helper Properties
 
-When you need to short name, you can just reference it like this: `${parameters.short_env_name[parameters.environment]}`
+Create a parameter `environment` with 3 options:
 
+![environment parameter](https://cl.ly/792c433f0efa/Image%2525202019-03-28%252520at%2525202.06.04%252520PM.png)
+<br/>
+Access the value of the variable via a helper property, in this case, `parameter`. For example:<br/>
+```
+The environment is: ${ parameters.environment }
+```
 
-#### Using a ternary operator to condition something on current state:
-Ternary operator:
+Some Helper Properties are already defined, for example:
+```
+The execution id is automatically set: ${execution['id']}
+```
+
+## Helper Functions
+
+Read and print a JSON, for example:
+```
+${#readJson('{"development": "dev", "staging": "stage", "production":"prod"}').toString()}
+```
+<br/>
+You can also access a value in the JSON with the `environment` parameter from the [Helper Properties](#helper_properties) Section:
+```
+${#readJson('{"development": "dev", "staging": "stage", "production":"prod"}')[parameters.environment]}
+```
+
+## Ternary Operator
+
 ```java
 <some-condition> ? <value-if-true> : <value-if-false>
 ```
-
+<br/>
 Simple example:
 ```java
 ${ true ? "True text" : "False text" }
 ```
-
-
-Example (in the text of a Manual Judgement stage), where `Get Service` is a "Find Artifacts From Resource (Manifest)" (`findArtifactsFromResource`) that looks at a Kubernetes `service` object:
+<br/>
+Example (in the text of a Manual Judgement stage), where `Get Service` is a "Find Artifacts From Resource (Manifest)" that looks at a Kubernetes `service` object:
 ```
 The loadBalancer ingress is ${ #stage("Get Service")["outputs"]["manifest"]["status"]["loadBalancer"].containsKey("ingress") ? "ready" : "not ready" }.
 ```
 
-#### Getting the execution id
-```
-${execution['id']}
-```
+## Whitelisted Java Classes
 
-For example:
+Some Java classes are available for use in SpEL expressions (see [Spinnaker Reference Docs](https://www.spinnaker.io/reference/pipeline/expressions/#whitelisted-java-classes))
+<br/>
+For example, generating the current date in MM-dd-yyyy format:
 ```
-This is the execution id: ${execution['id']}
+${new java.text.SimpleDateFormat("MM-dd-yyyy").format(new java.util.Date())}
+```
+<br/>
+Sometimes you may want to call a static method. For example, to generate a UUID:
+```
+ ${T(java.util.UUID).randomUUID() }
 ```
