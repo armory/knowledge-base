@@ -1,23 +1,24 @@
 ---
-date: 2018-12-14
-title: Enabling Basic Auth for Halyard
+date: 2019-03-30
+title: Enabling Basic Auth for Spinnaker via Halyard
 categories:
-   - troubleshooting
-description: Enabling basic or simple Auth using Spinnaker.
+   - Installation
+description: Enabling Basic Auth for Spinnaker via Halyard
 type: Document
 ---
 
-If you want to enable Simple Auth using Spinnaker: 
+If you want to enable Simple Auth for Spinnaker using Halyard:
 Create/update the `.hal/<deployment-name>/profiles/gate-local.yml` file, with these contents:
 
-```
+```yml
 security:
-  basic:
+  basicform:
     enabled: true
   user:
     name: <username you want>
     password: <password you want>
 ```
+
 And then create/update the `.hal/<deployment-name>/profiles/settings-local.js`, with these contents
 
 ```
