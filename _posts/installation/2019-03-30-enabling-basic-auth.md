@@ -1,9 +1,9 @@
 ---
 date: 2019-03-30
-title: Enabling Basic Auth for Spinnaker via Halyard
+title: Enabling Basic Form Authentication for Spinnaker via Halyard
 categories:
    - Installation
-description: Enabling Basic Auth for Spinnaker via Halyard
+description: Enabling Basic Form Authentication for Spinnaker via Halyard
 type: Document
 ---
 
@@ -26,3 +26,5 @@ window.spinnakerSettings.authEnabled = true;
 ```
 
 Then, apply your change (`hal deploy apply`).
+
+To access Spinnaker, you will be prompted with a simple form to enter the username and password.
