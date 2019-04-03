@@ -52,23 +52,21 @@ The Details key maps some very common elements for the event:
 * application -- The name of the Spinnaker application
 * created -- Timestamp of when the event was created
 * requestHeaders -- HTTP request headers for the internal request
-* source -- The microservice that generated the event
-* type -- An identifier as to what kind of event this was (for example, `orca:pipeline:starting')
+* source -- The microservice that generated the event (ex. 'clouddriver')
+* type -- An identifier as to what kind of event this was (ex. `orca:pipeline:starting')
 
-The Content section is very varied, and depends on what kind of event is being
+The Content section is variable, and depends on what kind of event is being
 tracked.  Here are some of the more common events:
 
-Web access events contain your basic web event data, the request
+* Web access events contain your basic web event data, the request
 headers, URL, User Agent, encoding directives, etc.
 
-Build events pass along the name of the build job (from Jenkins, Travis, etc),
+* Build events pass along the name of the build job (from Jenkins, Travis, etc),
 the success/failure, duration of the job.
 
-Commit events (from Github webhooks for example) will contain the organization,
-project names, the hash of the commit, the timestamp of the commit, but no
-commit messages or file contents.
+* Webhook events (like commits from Github) will contain whatever the webhook has sent along in its payload.  For most SCMs, this is just the name of the organization, the repo name, a hash representing the commit, and a timestamp.  If you've set up any other webhook events that you using to trigger Spinnaker, take care with what data is being sent.
 
-Pipeline events will contain all the same data you would see in Spinnaker if
+* Pipeline events will contain all the same data you would see in Spinnaker if
 you click on "Source" under a pipeline's stage.  This includes the name of
 the application, pipeline, the build information, the trigger information,
 and the status and results of all the stages included in that pipeline
