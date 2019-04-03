@@ -18,12 +18,14 @@ Here's the Halyard command to enable this feature:
 
 ```
 hal armory diagnostics enable
+hal armory diagnostics edit --logging-enabled=true
 ```
 
 And similarly, to disable it:
 
 ```
 hal armory diagnostics disable
+hal armory diagnostics edit --logging-enabled=false
 ```
 
 Of course, you'll need to remember to run `hal deploy apply` after each
