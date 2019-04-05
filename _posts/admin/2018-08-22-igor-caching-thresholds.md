@@ -49,6 +49,7 @@ curl -X POST http://igor_address_port/admin/pollers/fastforward/help
   "timestamp": "2018-08-23T00:35:15.592+0000"
 }
 ```
+"fastforward" essentially moves the pointer to the latest state (in this case Jenkins), telling Igor to safely ignore all previous changes. 
 
 - If this happens often, then you may want to change limits to something higher, or pollIntervals to something lower.
 
@@ -60,7 +61,7 @@ spinnaker:
     pollingSafeguard:
        itemUpperThreshold: 1000  # change your limits for all monitors
 ```
-
+Increasing the `itemUpperThreshold` will allow Igor to respond to more changes in the given timeframe specified by `pollInterval`.  
 
 ## More information
 This affects Armory versions >= v1.13.7.
