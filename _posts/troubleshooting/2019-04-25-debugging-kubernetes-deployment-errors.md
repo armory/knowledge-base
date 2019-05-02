@@ -20,6 +20,12 @@ Typically this is caused by one of the following issues:
 You can add the namespaces by running (from within Halyard) `hal config provider kubernetes account edit [theNewClusterAccountName] --add-namespace [TargetNamespaceName]
 
 For additional troubleshooting: 
-Check the CloudDriver logs for additional information: `kubectl -n spinnaker logs -f spin-clouddriver-*****`
-
+Check the CloudDriver logs for additional information: 
+```bash
+### replace the namespace with where you installed Spinnaker, default is 'spinnaker'
+export NAMESPACE="spinnaker"
+### get the spin-cloudriver complete pod name and check the clouddriver logs
+kubectl -n $NAMESPACE get pods
+kubectl -n $NAMESPACE logs -f spin-clouddriver-*****
+```
 
