@@ -39,8 +39,10 @@ You as always, should check connectivity, exec into igor
 test for connectivity, for example testing for Armory Jenkins
 
 
-```bash-4.4$ nc -zv jenkins.armory.io 443
-jenkins.armory.io (35.192.190.152:443) open```
+```
+bash-4.4$ nc -zv jenkins.armory.io 443
+jenkins.armory.io (35.192.190.152:443) open
+```
 
 If the connectivity is not the issue, you can try to increase the timeout by modifying
 
