@@ -13,6 +13,10 @@ Back in December of 2018, AWS added supported for Lambda and it was released in 
 
 This document will show you how to create a custom webhook stage that utilizes the Lambda API built into Clouddriver.  This document also assumes that you have configured an AWS account.  If you need more instructions on configuring your AWS account please refer to either [Deploying to AWS from Spinnaker (using IAM instance roles)](https://docs.armory.io/spinnaker-install-admin-guides/add-aws-account-iam/) or [Deploying to AWS from Spinnaker (using IAM credentials)](https://docs.armory.io/spinnaker-install-admin-guides/add-aws-account/) 
 
+### Note: 
+
+This is a proof of concept implementation and is not recommended for production use!
+
 ## Enable AWS Lambda in Spinnaker
 
 First, we need to enable Lambda by adding a `clouddriver-local.yml` file to your hal config profiles directory e.g. `.hal/default/profiles/clouddriver-local.yml`
