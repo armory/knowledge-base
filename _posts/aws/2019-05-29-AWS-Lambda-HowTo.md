@@ -15,7 +15,7 @@ This document will show you how to create a custom webhook stage that utilizes t
 
 ### Note: 
 
-This is a Proof of Concept implementation and is not recommended for production use!
+This is a proof of concept implementation and is not recommended for production use!
 
 ## Enable AWS Lambda in Spinnaker
 
