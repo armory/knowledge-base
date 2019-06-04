@@ -23,7 +23,7 @@ First, we need to add a trigger to our pipeline, under Configuration, select Add
 
 Next, we can proceed in the creation of an API in AWS API Gateway, the main intention of this is to maintain security and control over Spinnaker's exposed endpoints, and API Gateway offers an easy way to create, publish, maintain, monitor, and secure APIs at any scale.
 
-<a href="https://cl.ly/e9d0ae7fb024" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/1X3z1w2A392o3l0L2C2U/Screen%20Shot%202019-06-03%20at%203.17.58%20PM.png" style="display: block;height: auto;width: 100%;"/></a>
+<a href="https://cl.ly/e9d0ae7fb024" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/1X3z1w2A392o3l0L2C2U/Screen%20Shot%202019-06-03%20at%203.17.58%20PM.png" style="display: block;height: auto;width: 100%;margin-bottom:10px"/></a>
 
 You might notice after have deployed your API, that establishing a connection between AWS API Gateway to Spinnaker it’s not straight forward, this is mainly because API Gateway runs in its own VPC and is completely managed by AWS, removing the option of VPC peering between both networks. 
 
@@ -31,35 +31,37 @@ You might notice after have deployed your API, that establishing a connection be
 
 Fortunately, with AWS API Gateway, you can do [“Private Integrations”](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-private-integration.html), which is a way to expose your HTTP/HTTPS resources behind an Amazon VPC for access by clients or third party systems outside of the VPC, currently only Network Load Balancers are supported to make private integrations.
 
-Now, let create a Network load balancer in our EKS cluster with kubernetes service, remember that Spinnaker expose webhook URLs through Gate, which is Spinnaker’s API Gateway, all traffic flows through Gate.
+<a href="https://cl.ly/02e7d06c8a7a" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/3D082j3U1u431F1k2L1y/Screen%20Shot%202019-06-03%20at%2011.15.54%20PM.png" style="display: block;height: auto;width: 75%;"/></a>
+
+Before create a Network load balancer,  Let's create a NodePort that opens a specific port on all worker nodes, and any traffic that is sent to this port will be forwarded to the Gate's service.
 
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
+  name: spin-gate-internal
+  namespace: default
   labels:
     app: spin
     cluster: spin-gate
-  name: spin-gate-internal
-  namespace: default
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
 spec:
-  externalTrafficPolicy: Cluster
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: 8084
+  type: NodePort
   selector:
     app: spin
     cluster: spin-gate
-  sessionAffinity: None
-  type: LoadBalancer
+  ports:
+  - name: http
+    port: 8084
+    protocol: TCP
 ```
 
-You might notice the annotations aws-load-balancer-type: "nlb" and aws-load-balancer-internal: "true" that will cause AWS to create an internal-facing Network load balancer when we create this service in EKS.
+Now, let create a Network load balancer in AWS, first select internal scheme, we don't want expose all Gate's endpoints, NLB supports TCP and TLS protocols, select TLS if you want add a certificate from AWS Certificate Manager, it is important to create the NLB in the same VPC of your EKS Cluster.
+
+<a href="https://cl.ly/a324ff1d0243" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/1X2I1B0m1o2l1E013702/Screen%20Shot%202019-06-03%20at%2011.09.32%20PM.png" style="display: block;height: auto;width: 100%;margin-bottom:10px"/></a>
+
+After that, we are going to create a target group which is used to route requests to the registered instances in this group under the protocol and port that you specify, in this case we will use the NodePort created previously and register all EKS's worker nodes.
+
+<a href="https://cl.ly/d864843ecda2" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/2q3z2C1s0e071V121s0b/Screen%20Shot%202019-06-03%20at%2011.13.05%20PM.png" style="display: block;height: auto;width: 100%;"/></a>
 
 ## Creating VPC Link
 
@@ -71,6 +73,6 @@ Now, in API Gateway we can create a VpcLink to encapsulate connections between A
 
 At this point, we have our API Gateway with private integration to our private EKS cluster well configured, now just we need to add our webhook URL or other resources that we want to expose externally via API.
 
-<a href="https://cl.ly/ac14e59a5758" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/1m3d0m111n3r1w0n0u1K/Screen%20Shot%202019-06-03%20at%203.33.20%20PM.png" style="display: block;height: auto;width: 100%;"/></a>
+<a href="https://cl.ly/ac14e59a5758" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/1m3d0m111n3r1w0n0u1K/Screen%20Shot%202019-06-03%20at%203.33.20%20PM.png" style="display: block;height: auto;width: 100%;margin-bottom:10px"/></a>
 
 Now we can take advantage of all benefits that API Gateway offers in the moment to expose our resources, as access by IAM policies, api-keys, IP range, and more, without changing our EKS cluster's network configuration.
