@@ -2,14 +2,16 @@
 date: 2019-05-29
 title: AWS API Gateway Integration
 categories:
+   - Admin
    - AWS
-description: How to integrate AWS API Gateway to expose Spinnaker webhook
+description: How to integrate AWS API Gateway to expose Spinnaker API endpoints (Gate)
 type: Document
 ---
 
+
 ## Background
 
-There are a handful of options to manage the accessing to Spinnaker by third-party systems, without Spinnaker being exposed externally, this document will show you how to expose Spinnaker's resources thorugh [AWS API Gateway](https://aws.amazon.com/api-gateway/) which will help us to monitor and restrict access to our expose resources.
+There are a handful of options to manage access to Spinnaker by third-party systems, without Spinnaker being exposed externally, this document will show you how to expose Spinnaker's resources through [AWS API Gateway](https://aws.amazon.com/api-gateway/) which will help us monitor and restrict access to our exposed resources.
 
 In this case we will expose a webhook URL to trigger a pipeline which could be called from a third-party system outside of our infrastructure, this document also assumes that you have configured Spinnaker in EKS.
 
@@ -40,7 +42,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: spin-gate-internal
-  namespace: default
+  namespace: <spinnaker's namespace>
   labels:
     app: spin
     cluster: spin-gate
@@ -52,7 +54,6 @@ spec:
   ports:
   - name: http
     port: 8084
-    nodePort: 32095
     protocol: TCP
 ```
 
