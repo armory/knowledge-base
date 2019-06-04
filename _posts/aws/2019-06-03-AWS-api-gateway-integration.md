@@ -9,9 +9,9 @@ type: Document
 
 ## Background
 
-There are a handful of options to manage the accessing to Spinnaker by third party systems, without Spinnaker being exposed externally, this document will show you how to expose Spinnaker's resources thorugh [AWS API Gateway](https://aws.amazon.com/api-gateway/) which will help us to monitor and restrict access to our expose resources.
+There are a handful of options to manage the accessing to Spinnaker by third-party systems, without Spinnaker being exposed externally, this document will show you how to expose Spinnaker's resources thorugh [AWS API Gateway](https://aws.amazon.com/api-gateway/) which will help us to monitor and restrict access to our expose resources.
 
-In this case we will expose a webhook URL to trigger a pipeline which could be called from a third party system outside of our infrestructure, this document also assumes that you have configured Spinnaker in EKS.
+In this case we will expose a webhook URL to trigger a pipeline which could be called from a third-party system outside of our infrastructure, this document also assumes that you have configured Spinnaker in EKS.
 
 ## Adding a webhook trigger in Spinnaker
 
@@ -33,7 +33,7 @@ Fortunately, with AWS API Gateway, you can do [“Private Integrations”](https
 
 <a href="https://cl.ly/02e7d06c8a7a" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/3D082j3U1u431F1k2L1y/Screen%20Shot%202019-06-03%20at%2011.15.54%20PM.png" style="display: block;height: auto;width: 75%;"/></a>
 
-Before create a Network load balancer,  Let's create a NodePort that opens a specific port on all worker nodes, and any traffic that is sent to this port will be forwarded to the Gate's service.
+Before create a Network load balancer, Let's create a NodePort that opens a specific port on all worker nodes, and any traffic that is sent to this port will be forwarded to the Gate's service.
 
 ```yaml
 apiVersion: v1
@@ -52,10 +52,15 @@ spec:
   ports:
   - name: http
     port: 8084
+    nodePort: 32095
     protocol: TCP
 ```
 
-Now, let create a Network load balancer in AWS, first select internal scheme, we don't want expose all Gate's endpoints, NLB supports TCP and TLS protocols, select TLS if you want add a certificate from AWS Certificate Manager, it is important to create the NLB in the same VPC of your EKS Cluster.
+In addition to allow traffic through this port in AWS, we also need to add inbound rules to our EKS cluster's Security Group.
+
+<a href="https://cl.ly/9fce95ceb822" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/2J3a3T1m1k020m3h1e0r/Screen%20Shot%202019-06-04%20at%2010.41.20%20AM.png" style="display: block;height: auto;width: 100%;margin-bottom:10px"/></a>
+
+Now, let create a Network load balancer in AWS, first select internal scheme, we don't want expose all Gate's endpoints, NLB supports TCP and TLS protocols, select TLS if you want to add a certificate from AWS Certificate Manager, it is important to create the NLB in the same VPC of your EKS Cluster.
 
 <a href="https://cl.ly/a324ff1d0243" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/1X2I1B0m1o2l1E013702/Screen%20Shot%202019-06-03%20at%2011.09.32%20PM.png" style="display: block;height: auto;width: 100%;margin-bottom:10px"/></a>
 
