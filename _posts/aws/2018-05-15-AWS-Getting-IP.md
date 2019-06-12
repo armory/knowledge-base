@@ -8,7 +8,7 @@ type: Document
 ---
 
 ### Question
-I would like to get the IP of an instance in a ASG through a Pipeline Expression in Spinnaker?
+I would like to get the IP of an instance in an ASG through a Pipeline Expression in Spinnaker?
 
 ***
 
