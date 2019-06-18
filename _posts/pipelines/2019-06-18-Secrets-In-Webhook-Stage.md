@@ -1,22 +1,21 @@
 ---
-date: 2019-05-29
-title: AWS S3 Secrets in Custom Webhook Stages
+date: 2019-06-18
+title: Secrets in Custom Webhook Stage
 categories:
-   - AWS
-description: How to use secrets from S3 in custom webhook stages.
+   - Pipelines
+description: How to use secrets from S3 in custom webhook stage.
 type: Document
 ---
 
 ## Background
 
-Early this year from [version 1.15.0](https://github.com/spinnaker/halyard/releases), Halyard supports secret management that allow us to store our passwords even files as kube configs in S3 and reference them from a yml file, this is a great feature that we can use in several scenarios where we want to hide information and store them in a safe place.
+Now from [Armory Spinnaker version 2.4.0](https://docs.armory.io/release-notes/armoryspinnaker_v2.4.0/), Managing Spinnaker secrets separately from its configuration is possible which allow us to store our passwords, tokens or sensitive files in secret engines like S3 and Vault, and reference them from config files then halyard can decrypt them when it needs to use them or send them to Spinnaker services to be decrypted upon startup.
 
-This document will show you how to use S3 secrets in a custom webhook stage.  This document also assumes that you have configured an AWS account.  If you need more instructions on configuring your AWS account please refer to either [Deploying to AWS from Spinnaker (using IAM instance roles)](https://docs.armory.io/spinnaker-install-admin-guides/add-aws-account-iam/) or [Deploying to AWS from Spinnaker (using IAM credentials)](https://docs.armory.io/spinnaker-install-admin-guides/add-aws-account/) 
-
+This document will show you how to use S3 secrets in a custom webhook stage.  This document also assumes that you have configured your [Spinnaker secrets in S3](https://docs.armory.io/spinnaker-install-admin-guides/secrets-s3/).  If you need instructions on configuring your Spinnaker secrets in Hashicorp’s Vault please refer to [Secrets with Vault](https://docs.armory.io/spinnaker-install-admin-guides/secrets-vault/)
 
 ## Store Secrets in S3
 
-First, Let’s store our Api-Key and Payload in S3 `mybucket/spinnaker-secrets.yml`, Amazon Simple Storage Service (Amazon S3) is an object storage service that offers scalability, data availability, security, and performance. Here is [how to enable encryption in S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html)
+First, Let’s store our Api-Key and Payload in S3 `mybucket/spinnaker-secrets.yml`, Amazon Simple Storage Service (Amazon S3) is an object storage service that offers scalability, data availability, security, and performance. Here is [how to enable encryption in S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html).
 
 ```yaml
 webhook:
@@ -52,7 +51,7 @@ webhook:
 
 Following this guide on [Secrets with S3](https://docs.armory.io/spinnaker-install-admin-guides/secrets-s3/), in order to reference secrets in S3 from our config files, we should follow the next format: `encrypted:s3!r:<region>!b:<bucket>!f:<path to file>!k:<optional key>`
 
-Run `hal deploy apply` and you should see a new orca pod. And if you want to verify you can exec into orca, and find the orca-local.yml file under `/opt/spinnaker/config/`, at this moment Spinnaker will decrypt the secrets in S3, any change in S3 will require run `hal deploy apply` 
+Run `hal deploy apply` and you should see a new orca pod. And if you want to verify you can exec into orca, and find the orca-local.yml file under `/opt/spinnaker/config/`, at this moment Spinnaker will decrypt the secrets in S3, any change in S3 will require run `hal deploy apply`. 
 
 ## Add Webhook to a Pipeline
 
