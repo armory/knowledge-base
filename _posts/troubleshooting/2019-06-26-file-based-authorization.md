@@ -3,7 +3,6 @@ date: 2019-06-26
 title: Test authorization configuration with file based role definitions
 categories:
    - troubleshooting
-   - admin
 description: How to test authorization configuration using file based authz.
 type: Document
 ---
