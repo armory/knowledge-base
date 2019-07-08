@@ -3,12 +3,12 @@ date: 2018-04-17
 title: Shared Configuration Repository
 categories:
    - AWS
-description: "A guide for using Spinnaker with multiple AWS"
+description: "A guide for using Spinnaker with multiple AWS accounts"
 type: Document
 ---
 
 ### Question:
-We would like a guide that shows us how to use the same or multiple spinnaker installations to deploy to multiple AWS Accounts while sharing a single configuration repository.
+How do you use the same or multiple Spinnaker installations to deploy to multiple AWS accounts while sharing a single configuration repository?
 
 ***
 
