@@ -1,6 +1,6 @@
 ---
 date: 2018-05-09
-title: Determining Your Armoy Spinnaker Version 
+title: Determining Your Armory Spinnaker Version 
 categories:
    - Admin
 description: Determining the version of Armory Spinnaker. 

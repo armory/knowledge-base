@@ -3,13 +3,13 @@ date: 2018-11-20
 title:  Armory Halyard Overview
 categories:
    - Admin
-description:  Armory Halyard Overview
+description:  Overview of Armory Halyard, a tool for configuring, installing, and updating Spinnaker
 type: Document
 ---
 
 ### Question:
 
-How does the Armory installer work?  What makes it different from the standard OSS Spinnaker installer?
+How does the Armory Halyard installer work?  What makes it different from the standard OSS Spinnaker installer?
 
 Also, does it use Terraform?  Does it run as a single Docker container?
 
@@ -25,10 +25,10 @@ The OSS Halyard installer works roughly as follows†:
    * `hal config provider kubernetes enable` to enable the Kubernetes Cloud Provider
    * `hal config provider kubernetes account add X --<flags>` to add a Kubernetes account
    * `hal config storage edit --<flags>` to configure persistent storage using some blob storage
-   * `hal config deploy edit --type distributed --account-name X --<flags>` to configure halyard to deploy Spinnaker as a distributed set of Kuberntes deployments on account X
+   * `hal config deploy edit --type distributed --account-name X --<flags>` to configure Halyard to deploy Spinnaker as a distributed set of Kuberntes deployments on account X
 * All of the various configs you add via `hal config` are added to a dot directory called `.hal`.  For example, most of the above configurations would be reflected in `~/.hal/config`
 * You run `hal deploy apply` to 'apply' all of the changes that you've made and install Spinnaker to your cluster.  This does the following:
-   * Renders a number of intermediate yml (and other configuration) files in a `staging` directory (`~/.hal/<deployment>/staging`)
+   * Renders a number of intermediate yaml (and other configuration) files in a `staging` directory (`~/.hal/<deployment>/staging`)
    * Creates a number of Kubernetes secrets containing the rendered configuration files
    * Creates a Kubernetes *deployment* for each of the Spinnaker microservices
    * Creates a Kubernetes *service* entity for each of the Spinnaker microservices

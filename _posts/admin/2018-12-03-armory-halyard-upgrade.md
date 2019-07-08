@@ -9,7 +9,7 @@ type: Document
 
 ### Question:
 
-If I'm using Armory Spinnaker, how to I upgrade?
+If I'm using Armory Spinnaker, how do I upgrade?
 
 ***
 
