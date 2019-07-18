@@ -22,7 +22,7 @@ aws:
     cloudFormation:
       enabled: true
 ```
-You can check your configuration by running `hal deploy apply` and check the clouddriver logs (e.g. `kubectl logs -f -n spinnaker spin-clouddriver-xxxxx`) for any start-up errors.  Refer to the [Debugging](#debugging) section for checking your deployment.
+You can check your configuration by running `hal deploy apply`.
 
 &nbsp;
 ### Halconfig 
@@ -56,11 +56,10 @@ aws:
 ```
 
 &nbsp;
-### Policy
+### CloudFormation permissions in Policy
 
 Another thing to check is the `cloudformation:*` permission in the *"Action"* section inside your **Policy**, like in the following example. 
 
-_for more details please refer to [Creating a Managing Account IAM Policy in your primary AWS Account](https://docs.armory.io/spinnaker-install-admin-guides/add-aws-account/#iam-user-part-3-creating-a-managing-account-iam-policy-in-your-primary-aws-account)_
 
 ```json
 {
@@ -84,6 +83,7 @@ _for more details please refer to [Creating a Managing Account IAM Policy in you
     ]
 }
 ```
+_for more details please refer to [Creating a Managing Account IAM Policy in your primary AWS Account](https://docs.armory.io/spinnaker-install-admin-guides/add-aws-account/#iam-user-part-3-creating-a-managing-account-iam-policy-in-your-primary-aws-account)_
 
 ## Creating your Pipeline
 
