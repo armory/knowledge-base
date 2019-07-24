@@ -14,5 +14,5 @@ type: Video
 set: getting-started
 set_order: 9
 ---
-In this video Ethan, Armory's Software Engineer, will touch upon some high level concept in Spinnaker, such as Server Groups, how to rollback server groups, what a cluster is, what an application is, what a pipeline is and how all these concepts come together.
+In this video Ethan, a Staff Engineer at Armory, will touch upon some high level concept in Spinnaker, such as Server Groups, how to rollback server groups, what a cluster is, what an application is, what a pipeline is and how all these concepts come together.
 

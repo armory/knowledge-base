@@ -1,13 +1,13 @@
 ---
 date: 2018-09-04
-title: Specifying a subnet during Bake stage
+title: Specifying a Subnet During Bake Stage
 categories:
    - AWS
-description: Specifying a subnet during Bake stage
+description: Specifying a Subnet During Bake Stage
 type: Document
 ---
 
-## How To
+### How To
 
 There may be occassions where it's useful to specify the subnet used in your _Bake_ stage. Targeting a specific subnet can ensure your [Packer Builders](https://www.packer.io/docs/builders/index.html) (which Spinnaker relies on for baking images) are assigned a subnet which meets the requirements of the network (e.g. a subnet which does not auto-assign a public IP).
 
