@@ -16,18 +16,26 @@ This document will show you how to enable the CloudFormation stage.  This docume
 ### Enable Cloudformation in Spinnaker
 
 First, we need to enable CloudDriver by adding a `clouddriver-local.yml` file to your hal config profiles directory e.g. `.hal/default/profiles/clouddriver-local.yml`.
-```yaml
+```
 aws:
   features:
     cloudFormation:
       enabled: true
 ```
-You can check your configuration by running `hal deploy apply`.
 
 &nbsp;
 ### Halconfig 
 
-Make sure to enable the aws provider and have set at least one region
+Make sure to enable the aws provider, (if you don't have the provider enable please refer to the background section to find the links).
+
+Also you need to have setted up at least one region. To add a region you can use this instruction:
+```yaml
+export AWS_ACCOUNT_NAME=aws-1
+hal config provider aws account edit ${AWS_ACCOUNT_NAME} \
+    --regions us-east-1,us-west-2
+```
+
+This is an example how should looks your hal config.
 
 ```yaml
 aws:
@@ -55,10 +63,12 @@ aws:
     iamRole: BaseIAMRole
 ```
 
+You can check your configuration by running `hal deploy apply`.
+
 &nbsp;
 ### CloudFormation permissions in Policy
 
-Another thing to check is the `cloudformation:*` permission in the *"Action"* section inside your **Policy**, like in the following example. 
+Another thing to check is in the AWS Console the `cloudformation:*` permission in the *"Action"* section inside your **Policy**, like in the following example. 
 
 
 ```json
@@ -66,13 +76,11 @@ Another thing to check is the `cloudformation:*` permission in the *"Action"* se
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": "sts:AssumeRole",
             "Resource": "arn:aws:iam::123456789123:role/SpinnakerManagedRole"
         },
         {
-            "Sid": "VisualEditor1",
             "Effect": "Allow",
             "Action": [
                 "ec2:*",
@@ -83,7 +91,7 @@ Another thing to check is the `cloudformation:*` permission in the *"Action"* se
     ]
 }
 ```
-_for more details please refer to [Creating a Managing Account IAM Policy in your primary AWS Account](https://docs.armory.io/spinnaker-install-admin-guides/add-aws-account/#iam-user-part-3-creating-a-managing-account-iam-policy-in-your-primary-aws-account)_
+_for more details please refer to [Creating a Managing Account IAM Policy in your primary AWS Account](https://docs.armory.io/spinnaker-install-admin-guides/add-aws-account/#iam-user-part-3-creating-a-managing-account-iam-policy-in-your-primary-aws-account)_ Part 3.
 
 ## Creating your Pipeline
 
@@ -91,8 +99,10 @@ After you've deployed your changes, you should now be able to see the new stages
 Simply select the stage, and provide the values: example below: 
 
 ![](/images/cloudformation-pipeline1.png)
+**Note:** _The "Stack name" is a unique value so if you run a second time you will need to change it._
 
-In this exaple we are going to deploy a simple s3 bucket with the follow template, (Copy and paste in the **Text Source** section)
+
+In this example we are going to deploy a simple s3 bucket with the follow template, (Copy and paste in the **Text Source** section)
 
 ```json
 {
@@ -116,6 +126,7 @@ In this exaple we are going to deploy a simple s3 bucket with the follow templat
 }
 
 ```
+**Note:** _You can test changing the "BucketName" propertie "cf-example-s3" by other._
 
 ## Run the pipeline
 
