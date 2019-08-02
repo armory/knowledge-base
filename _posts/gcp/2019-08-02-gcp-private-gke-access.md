@@ -1,6 +1,6 @@
 ---
 date: 2019-08-02
-title: Configuring private GKE cluster access for Kubectl    
+title: Configuring access for Kubectl to private GKE cluster
 categories:
    - GCP
 description: A guide to how to configure access for Kubectl to private Google Kubernetes Engine cluster with different level of restricted access 
@@ -8,22 +8,22 @@ type: Document
 ---
 
 ## Objectives
-1. How to update kubeconfig for Kubectl to access private GKE cluster using *gcloud* cli
+1. How to update kubeconfig for Kubectl to access private GKE cluster using *gcloud* 
 2. How to update kubeconfig with GKE cluster master private endpoint  
 3. How to authenticate Kubectl for GCP user and service account 
 
 ***
-## Two endpoints in private GKE cluster
+## Two master endpoints  
 
 A private GKE cluster is an important means to isolate a cluster from public internet. Private cluster will enable its nodes to have internal RFC-1918 IP address only - **private nodes**. This is the characteristics definition of private cluster in GKE.
 
-Further, **in a private cluster, the cluster master has two endpoints:**
+In a private cluster, the cluster master has two endpoints:
 
 **1) Private endpoint:** This is the internal IP address of the master, behind an internal load balancer in the master's VPC network. Nodes communicate with the master using the private endpoint. Any VM in your VPC network, and in the same region as your private cluster, can use the private endpoint.
 
 **2) Public endpoint:** This is the external IP address of the master. You can configure access to the public endpoint. In the most restricted case, there is no access to the public endpoint. You can relax the restriction by authorizing certain address ranges to access the public endpoint. You can also remove all restriction and allow anyone to access the public endpoint.
 
-## Master endpoint control configurations options
+## Control configurations options
 
 In a private cluster one can control access to the cluster master endpoints. Cluster master can have varying access configurations that can be tuned per security requirements as you will see below.
 1. Public endpoint access *disabled*.
@@ -44,9 +44,9 @@ If you want to update cluster authentication and want to use kubectl, follow the
    gcloud container clusters get-credentials [your-clustert-name]
    ```
 
-## Generating a kubeconfig using a private cluster's master internal IP address  
+## Generate kubeconfig with private endpoint  
 
-You can see that the above command gets the cluster endpoint as part of updating kubeconfig. By default, running *get-credentials* against a private GKE cluster sets the external IP address as the endpoint. 
+You can see that the above command gets the cluster endpoint as part of updating kubeconfig. By default, running *get-credentials* against a private GKE cluster sets the external IP address as the endpoint. i.e. public endpoint of cluster master.
 
 If you want to change this default behavior and want to use the internal IP as the endpoint i.e. private endpoint, follow the instructions below to refresh the cluster credentials in your local kubeconfig:
 
@@ -54,7 +54,7 @@ If you want to change this default behavior and want to use the internal IP as t
    gcloud container clusters get-credentials --internal-ip [your-clustert-name]
    ```
 
-By specifying the flag --internal-ip, one can write / replace a private cluster's internal IP address to kubeconfig. This enables access to private endpoint of GKE cluster with public endpoint access *disabled*.
+By specifying the flag --internal-ip, one can write / replace a private cluster's internal IP address to kubeconfig. This enables access to private endpoint of GKE cluster when public endpoint access *disabled*.
 
 ## Authenticating Kubectl
 
