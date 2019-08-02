@@ -18,7 +18,7 @@ type: Document
 Overaching objective of a private cluster is to ensure workloads on Kubernetes are isolated from the public internet. While there are many ways to achieve this isolation, a private GKE cluster is an important means. Private cluster will enable its nodes to have internal RFC-1918 IP address only - **private nodes**. This is the characteristics definition of private cluster in GKE.
 
 
-However, **in a private cluster one can control access to the cluster master**. Cluster mater can have varying access configurations that can be tuned per security requirements as you will see below. 
+However, **in a private cluster one can control access to the cluster master**. Cluster master can have varying access configurations that can be tuned per security requirements as you will see below. 
 
 ## Characteristics 
 1. Private cluster will have private nodes i.e. node with no external IP address. Private nodes do not have outbound internet access. Traffic between nodes and the master is routed entirely using internal IP addresses. 
