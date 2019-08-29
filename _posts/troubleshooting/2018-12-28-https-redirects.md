@@ -7,7 +7,7 @@ description: Troubleshooting http/https redirects with authentication
 type: Document
 ---
 
-## Troubleshooting http/https redirects
+### Troubleshooting http/https redirects
 
 When setting up TLS encryption for Deck and Gate (the UI and API) for Spinnaker, if you have a load balancer (service, ingress, etc.) in front of your Deck/Gate that are terminating TLS and forwarding communications insecure to the Spinnaker microservices, sometimes the authentication process will redirect to the incorrect path.
 
