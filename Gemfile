@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'jekyll', '~> 3.7.2'
+gem 'nokogiri', '~> 1.8.5'
 
 group :jekyll_plugins do
   gem "jekyll-livereload"
-  gem 'jekyll-archives', '2.1.1'
-  gem 'jekyll-extract-element', '0.0.7'
-  gem 'jekyll-feed', '0.9.3'
-  gem 'jekyll-seo-tag', '2.4.0'
-  gem 'jekyll-sitemap', '1.2.0'
+  gem 'jekyll-archives'
+  gem 'jekyll-extract-element', git: 'https://github.com/armory/jekyll-extract-element'
+  gem 'jekyll-feed'
+  gem 'jekyll-seo-tag'
+  gem 'jekyll-sitemap'
 end
