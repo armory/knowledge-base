@@ -17,5 +17,4 @@ Then import/configure the exported `spinnaker-saml.cer` in your iDP for the SAML
 
 Essentially, Gate is signing the requests with the Java Keystore and the iDP doesn't know how to understand the signed requests until it is aware of the signing certificate. 
 
-This is somewhat documented here: https://www.spinnaker.io/setup/security/authentication/saml/#identity-provider-setup
-
+This is somewhat documented [here](https://www.spinnaker.io/setup/security/authentication/saml/#identity-provider-setup).

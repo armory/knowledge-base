@@ -32,4 +32,4 @@ server:
     httpsServerPort: X-Forwarded-Port
 ```
 
-This is also documented here: https://www.spinnaker.io/setup/security/authentication/oauth/#network-architecture-and-ssl-termination
+This is also documented [here](https://www.spinnaker.io/setup/security/authentication/oauth/#network-architecture-and-ssl-termination).
