@@ -29,15 +29,15 @@ Yes. You can add any containers you need to the ‘deployment’/’replicaSet�
 ## How do you handle ingress with Let's encrypt SSL certificates?
 It is possible to deploy an ingress resource in the same way you can deploy any manifest. An nginx-ingress controller is configured by a config-map, which can be redeployed by Spinnaker to make changes. Since an ingress controller is a daemon deployed as a pod, it can also be redeployed by Spinnaker if desired.
 
-See [here](https://www.spinnaker.io/reference/providers/kubernetes-v2/#services-ingresses) for more information at Spinnaker's documentation.
+See [here](https://www.spinnaker.io/reference/providers/kubernetes-v2/#services-ingresses) for more information.
 
 ## Can V1 kube and V2 kube live on the same cluster?
 Yes. However, in the Spinnaker UI you will see every Kubernetes resource twice. Once, when the V1 provider sees it, and once, when the V2 provider sees it.
 
 ## Is it possible to apply secrets using the [Base (Future Simple) Helm Secrets Plugin](https://github.com/futuresimple/helm-secrets)?
-Unfortunately it is not possible today.
+It is not possible today.
 
-## How do we handle deployment in multiples clusters? For example, if our environment includes more than one Kubernetes cluster.
+## How do we handle deployment in multiple clusters? For example, if our environment includes more than one Kubernetes cluster.
 With the account concept in Kubernetes, an account is just a Kubernetes cluster. When you configure an account you configure it to use an specific kubeconfig file. This defines how we communicate and authenticate on our clusters. If you have multiple clusters you can configure multiple accounts within Spinnaker using different kubeconfig files that have the address for the API. When you set the deployment step you set up a different account to deploy to, and Spinnaker will use the credentials found in the kubeconfig.
 
 ## There are two different types of pipelines: Strategy and Pipeline. What's the difference?
