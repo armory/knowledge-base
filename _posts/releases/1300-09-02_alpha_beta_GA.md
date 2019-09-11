@@ -6,6 +6,8 @@ categories:
 description: Armory's definition of Alpha, Beta, GA, and what environments to install them on
 type: Document
 ---
+[//]: # (This comment is hidden. I don't know what this file is for. It's a duplicate of another file but named slightly differently. The other file (1300-09-02-alpha-beta-GA.md) is the one on the kb.)
+
 05/01/2018
 
 ##Question
@@ -17,13 +19,13 @@ This is a description that varies from company to company. We decided to publish
 
 
 ##Alpha
-Application is working and installation works, but some functionality is likely to be missing and a number of known and unknown bugs are likely to surface. We also call this a private beta, as it is released to a limited audience. 
+Application is working and installation works, but some functionality is likely to be missing and a number of known and unknown bugs are likely to surface. We also call this a private beta, as it is released to a limited audience.
 
 ##Where To Install Alpha
 Not production! No really don’t do it, this release is meant to give the user an advanced ability to get to know the platform sooner, but also to give us feedback on what is working and not working. Alpha is meant for a closed development environment, or a learning environment that can be destroyed at any minute and rebuilt.
 
 ##Beta
-Application is working and installation works, has had all of the major known issues fixed, but has not been tested with enough customers. Also known as open beta release. It is much closer to what we expect to ship to our audience. 
+Application is working and installation works, has had all of the major known issues fixed, but has not been tested with enough customers. Also known as open beta release. It is much closer to what we expect to ship to our audience.
 
 ##Where To Install Beta
 Pretty much everywhere except production. A production installation could occur but proceed with caution, and have proper rollbacks ready. Recommended is your development, QA, staging, or pre-prod environments. This release is meant to give the user an advanced ability to set up new functionality and hit the ground running when GA releases. It is also to give feedback on any final major issues.
