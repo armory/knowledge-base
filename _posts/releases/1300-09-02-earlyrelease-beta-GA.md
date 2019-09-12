@@ -22,7 +22,7 @@ Not production! No, really don’t do it! This release is meant to give the user
 <br><br>
 ### Beta
 The feature is working, and installation works. All of the major known issues are fixed, Armory is working with customers to test the feature out. It's close to what we expect to ship to our users.
-
+<br><br>
 **Where To Install Beta**
 
 Pretty much anywhere except production. A production installation could occur but proceed with caution and have proper rollbacks ready. If you want to experiment with the feature, Armory recommends using your development, QA, staging, or pre-prod environments. This release is meant to give the user a chance to set up new functionality and hit the ground running when GA releases. It is also an oppurtunity to give feedback on any final major issues.
@@ -32,7 +32,7 @@ All major technical issues have been identified and/or resolved. The application
 <br><br>
 **Where to Install GA**
 Anywhere you like.
-
+<br><br>
 ### Documentation
 With the above understanding, jump over to our documentation and enjoy.
 [https://docs.armory.io/release-notes/](https://docs.armory.io/release-notes/)
