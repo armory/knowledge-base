@@ -31,6 +31,7 @@ Pretty much anywhere except production. A production installation could occur bu
 All major technical issues have been identified and/or resolved. The application is available for install by all customers in the official Armory release.
 <br><br>
 **Where to Install GA**
+
 Anywhere you like.
 <br><br>
 ### Documentation
