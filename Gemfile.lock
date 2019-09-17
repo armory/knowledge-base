@@ -42,6 +42,8 @@ GEM
     jekyll-livereload (0.2.2)
       em-websocket (~> 0.5)
       jekyll (~> 3.0)
+    jekyll-redirect-from (0.15.0)
+      jekyll (>= 3.3, < 5.0)
     jekyll-sass-converter (1.5.2)
       sass (~> 3.4)
     jekyll-seo-tag (2.6.1)
@@ -84,9 +86,10 @@ DEPENDENCIES
   jekyll-extract-element!
   jekyll-feed
   jekyll-livereload
+  jekyll-redirect-from
   jekyll-seo-tag
   jekyll-sitemap
   nokogiri
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
