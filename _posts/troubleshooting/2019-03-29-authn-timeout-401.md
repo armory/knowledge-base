@@ -5,6 +5,9 @@ categories:
    - troubleshooting
 description: SAML authentication timeout results in 401 error
 type: Document
+redirect_from:
+  - /troubleshooting/okta-timeout-401/
+  - /troubleshooting/2019-03-29-okta-timeout-401/
 ---
 You may encounter the following error when a user attempts to login:
 ```
