@@ -33,6 +33,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-feed
   - jekyll-archives
+  - jekyll-redirect-from
 
 exclude:
   - Gemfile
@@ -60,7 +61,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      
+
   -
     scope:
       type: "sets"
