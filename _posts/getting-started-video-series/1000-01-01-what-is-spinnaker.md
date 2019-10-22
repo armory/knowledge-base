@@ -7,10 +7,9 @@ categories:
   - Spinnaker
 resources:
   - name: Armory Documentation
-    link: docs.armory.io
+    link: https://docs.armory.io
 type: Video
 set: getting-started
 set_order: 10
 ---
 In this video Ethan, a Staff Engineer at Armory, gives a quick overview of Spinnaker and some basic use cases. 
-
