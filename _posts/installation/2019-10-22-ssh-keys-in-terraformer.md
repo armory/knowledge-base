@@ -9,12 +9,12 @@ type: Document
 
 ## Background
 
-This document will show you how to install SSH Keys into the Terraformer container.  This process will require
+This document will show you how to install SSH Keys into the Terraformer container.  The process requires
 modifications to the deployment of Terraformer running in Kubernetes.
+<br><br>
+For information about what causes this issue, see the following Kubernetes issue: [https://github.com/kubernetes/kubernetes/issues/2630](https://github.com/kubernetes/kubernetes/issues/2630)
 
-This is due to this Kubernetes issue: https://github.com/kubernetes/kubernetes/issues/2630
-
-This is based on the workaround from here: https://stackoverflow.com/a/57908921
+The workaround is based on the following post from Stackoverflow: [https://stackoverflow.com/a/57908921](https://stackoverflow.com/a/57908921)
 
 ## Prerequisites
 
