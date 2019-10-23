@@ -100,14 +100,14 @@ ownership correctly.  The Spinnake user uses user id 1000:
       name: ssh-key-tmp
     ```
 
-Finally, add this to the envs to get the GCP service account to work for the S3 bucket.  This isn't necessary
-for the SSH Keys, but completes the example:
+Finally, add the following snippet to the envs to get the GCP service account to work for the S3 bucket:
 
 ```
 - env:
   - name: GOOGLE_APPLICATION_CREDENTIALS
     value: /home/spinnaker/.ssh/account.json
 ```
+This isn't necessary for the SSH Keys, but completes the example
 
 ## Result
 
