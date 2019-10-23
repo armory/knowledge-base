@@ -27,31 +27,31 @@ On local workstation, create a directory and place the SSH Key and any other req
 
 1. Create the directory:
 
-      ```
+      ```bash
       mkdir ssh
       ```
 
 2. Copy the SSH Key:
 
-      ```
+      ```bash
       cp $SSH_KEY_FILE ssh/id_rsa
       ```
 
 3. Copy any other authentication information that's needed:
 
-      ```
+      ```bash
       cp $GOOGLE_APPLICATION_CREDENTIALS ssh/account.json
       ```
 
 4. Create a config file for SSH to ignore the known_hosts checks:
 
-      ```
+      ```bash
       echo "StrictHostKeyChecking no" > ssh/config
       ```
 
 5. Create the secret using `kubectl`:
 
-    ```
+    ```bash
     kubectl create secret generic spin-terraformer-sshkey -n spinnaker-system --from-file=id_rsa=ssh/id_rsa --from-file=config=ssh/config --from-file=account.json=ssh/account.json
     ```
 
@@ -65,7 +65,7 @@ Next, the K8s manifest needs to be updated to include a few things.
 1. First, update the secret and an empty directory volume
 that will contain the copy of the secret with the correct uid and permissions:
 
-    ```
+    ```yaml
     volumes:
     - name: spin-terraformer-sshkey
       secret:
@@ -79,7 +79,7 @@ that will contain the copy of the secret with the correct uid and permissions:
 2. Second, define an init container that copies the secret contents to the empty directory and set the permissions and
 ownership correctly.  The Spinnake user uses user id 1000:
 
-    ```
+    ```yaml
     ### Adding to set the ownership of the ssh keys
     initContainers:
     - name: set-key-ownership
@@ -94,7 +94,7 @@ ownership correctly.  The Spinnake user uses user id 1000:
 
 3. Mount the (not so) empty directory into the Terraformer container at the `/home/spinnaker/.ssh` location:
 
-    ```
+    ```yaml
     volumeMounts:
     - mountPath: /home/spinnaker/.ssh
       name: ssh-key-tmp
@@ -102,7 +102,7 @@ ownership correctly.  The Spinnake user uses user id 1000:
 
 Finally, add the following snippet to the envs to get the GCP service account to work for the S3 bucket:
 
-```
+```yaml
 - env:
   - name: GOOGLE_APPLICATION_CREDENTIALS
     value: /home/spinnaker/.ssh/account.json
