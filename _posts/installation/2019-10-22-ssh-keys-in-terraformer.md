@@ -3,7 +3,7 @@ date: 2019-10-22
 title: SSH Keys in Terraformer
 categories:
    - Installation
-description: This article show how to install SSH Keys into the Terraformer container.
+description: This article describes how to install SSH Keys into the Terraformer container.
 type: Document
 ---
 
