@@ -107,7 +107,8 @@ Finally, add the following snippet to the envs to get the GCP service account to
   - name: GOOGLE_APPLICATION_CREDENTIALS
     value: /home/spinnaker/.ssh/account.json
 ```
-This isn't necessary for the SSH Keys, but completes the example
+
+This isn't necessary for the SSH Keys, but completes the example.
 
 ## Result
 
