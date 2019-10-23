@@ -108,7 +108,7 @@ Finally, add the following snippet to the envs to get the GCP service account to
     value: /home/spinnaker/.ssh/account.json
 ```
 
-This isn't necessary for the SSH Keys, but completes the example.
+This isn't necessary for the SSH Keys, but it completes the example.
 
 ## Result
 
