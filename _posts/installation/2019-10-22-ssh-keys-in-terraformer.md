@@ -16,74 +16,78 @@ This is due to this Kubernetes issue: https://github.com/kubernetes/kubernetes/i
 
 This is based on the workaround from here: https://stackoverflow.com/a/57908921
 
-## Preconditions
+## Prerequisites
 
   Terraformer installed in the Armory Spinnaker cluster.
   The SSH Key should already be created and added as a Deploy Key to the Git repository.
 
-## How to Use
+## Create the Secret
 
 On local workstation, create a directory and place the SSH Key and any other required authentication information inside:
 
-* Create the directory:
+1. Create the directory:
 
   `mkdir ssh`
 
-* Copy the SSH Key:
+2. Copy the SSH Key:
 
   `cp $SSH_KEY_FILE ssh/id_rsa`
 
-* Copy any other authentication information that's needed:
+3. Copy any other authentication information that's needed:
 
   `cp $GOOGLE_APPLICATION_CREDENTIALS ssh/account.json`
 
-* Create a config file for SSH to ignore the known_hosts checks:
+4. Create a config file for SSH to ignore the known_hosts checks:
 
   `echo "StrictHostKeyChecking no" > ssh/config`
 
-Now, create the secret using `kubectl`:
+5. Create the secret using `kubectl`:
 
-`kubectl create secret generic spin-terraformer-sshkey -n spinnaker-system --from-file=id_rsa=ssh/id_rsa --from-file=config=ssh/config --from-file=account.json=ssh/account.json`
+    `kubectl create secret generic spin-terraformer-sshkey -n spinnaker-system --from-file=id_rsa=ssh/id_rsa --from-file=config=ssh/config --from-file=account.json=ssh/account.json`
 
-In this example, this creates a secret with the SSH key, a config to ignore known_hosts file issues, and the GCP service
-account information to access the backend bucket that terraform is configured to use.
+In this example, we create a secret with the SSH key, a config to ignore known_hosts file issues, and the GCP service
+account information to access the backend bucket that Terraform is configured to use.
 
-Next the K8s manifest needed to be updated to include a few things.  First, the secret and an empty directory volume
-that will contain the copy of the secret with the correct uid and permissions.:
-```
-volumes:
-- name: spin-terraformer-sshkey
-  secret:
-    defaultMode: 420
-    secretName: spin-terraformer-sshkey
-- name: ssh-key-tmp
-  emptyDir:
-    sizeLimit: "128k"
-```
+## Update the Manifest
 
-Second, an init container that will copy the secret contents to the empty directory and set the permissions and
+Next, the K8s manifest needs to be updated to include a few things.  
+
+1. First, update the secret and an empty directory volume
+that will contain the copy of the secret with the correct uid and permissions:
+    ```
+    volumes:
+    - name: spin-terraformer-sshkey
+      secret:
+        defaultMode: 420
+        secretName: spin-terraformer-sshkey
+    - name: ssh-key-tmp
+      emptyDir:
+        sizeLimit: "128k"
+    ```
+
+2. Second, define an init container that copies the secret contents to the empty directory and set the permissions and
 ownership correctly.  The Spinnake user uses user id 1000:
-```
-### Adding to set the ownership of the ssh keys
-initContainers:
-- name: set-key-ownership
-  image: alpine:3.6
-  command: ["sh", "-c", "cp /key-secret/* /key-spin/ && chown -R 1000:1000 /key-spin/* && chmod 600 /key-spin/*"]
-  volumeMounts:
-  - mountPath: /key-spin
-    name: ssh-key-tmp
-  - mountPath: /key-secret
-    name: spin-terraformer-sshkey
-```
+    ```
+    ### Adding to set the ownership of the ssh keys
+    initContainers:
+    - name: set-key-ownership
+      image: alpine:3.6
+      command: ["sh", "-c", "cp /key-secret/* /key-spin/ && chown -R 1000:1000 /key-spin/* && chmod 600 /key-spin/*"]
+      volumeMounts:
+      - mountPath: /key-spin
+        name: ssh-key-tmp
+      - mountPath: /key-secret
+        name: spin-terraformer-sshkey
+    ```
 
-Third, the (not so) empty directory is mounted into the terraformer container at the `/home/spinnaker/.ssh` location:
-```
-volumeMounts:
-- mountPath: /home/spinnaker/.ssh
-  name: ssh-key-tmp
-```
+3. Mount the (not so) empty directory into the Terraformer container at the `/home/spinnaker/.ssh` location:
+    ```
+    volumeMounts:
+    - mountPath: /home/spinnaker/.ssh
+      name: ssh-key-tmp
+    ```
 
-Also, this had to be added to the envs to get the GCP service account to work for the S3 bucket.  This isn't necessary
+Finally, add this to the envs to get the GCP service account to work for the S3 bucket.  This isn't necessary
 for the SSH Keys, but completes the example:
 ```
 - env:
@@ -93,8 +97,8 @@ for the SSH Keys, but completes the example:
 
 ## Result
 
-After the modification are in place and Terraformer has time to redeploy via the replica set, Terraform should be able
-to clone git repositories via SSH as long as the repository has the SSH Key added as a deploy key.  Halyard shouldn't
+After the modifications are in place, and Terraformer has time to redeploy via the replica set, Terraform should be able
+to clone Git repositories via SSH as long as the repository has the SSH Key added as a deploy key.  Halyard shouldn't
 overwrite these changes, but it would be good to back this up.
 
 
