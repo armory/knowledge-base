@@ -26,15 +26,23 @@ This is based on the workaround from here: https://stackoverflow.com/a/57908921
 On local workstation, create a directory and place the SSH Key and any other required authentication information inside:
 
 * Create the directory:
+
   `mkdir ssh`
+
 * Copy the SSH Key:
+
   `cp $SSH_KEY_FILE ssh/id_rsa`
+
 * Copy any other authentication information that's needed:
+
   `cp $GOOGLE_APPLICATION_CREDENTIALS ssh/account.json`
-* Create a config file for SSH to ignore the known_hosts checks
+
+* Create a config file for SSH to ignore the known_hosts checks:
+
   `echo "StrictHostKeyChecking no" > ssh/config`
 
 Now, create the secret using `kubectl`:
+
 `kubectl create secret generic spin-terraformer-sshkey -n spinnaker-system --from-file=id_rsa=ssh/id_rsa --from-file=config=ssh/config --from-file=account.json=ssh/account.json`
 
 In this example, this creates a secret with the SSH key, a config to ignore known_hosts file issues, and the GCP service
