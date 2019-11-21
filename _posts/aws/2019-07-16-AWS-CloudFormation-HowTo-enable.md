@@ -126,7 +126,7 @@ In this example we are going to deploy a simple s3 bucket with the follow templa
 }
 
 ```
-**Note:** _You can test changing the "BucketName" propertie "cf-example-s3" by other._
+**Note:** _You can test changing the Cloud Formation JSON Template "Resources" > "S3Bucket" > "Properties" > "BucketName" property "cf-example-s3" by another unique name._
 
 ## Run the pipeline
 
@@ -136,6 +136,7 @@ Now you can run the pipeline and this will be conclude **SUCCEEDED**
 At the meanwhile you can see the execution details if you go to your *AWS CloudFormation console* 
 ![](/images/cloudformation-aws-console.png)
 
+**Note:** _You can execute the pipeline by generating an embedded-artifact. Deploy (CloudFormation Stack) > Source: Artifact > Expected Artifact: Artifact from execution context > Account: Embedded-artifact > Contents: "Input the CloudFormation JSON/YAML Template"._
 
 ## Validate
 In this particular example we created an S3 bucket so in order to validate you need to go to your aws console and check in the S3 bucket section.
