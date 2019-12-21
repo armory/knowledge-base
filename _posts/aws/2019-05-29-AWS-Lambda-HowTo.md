@@ -146,7 +146,7 @@ Simply select the stage, and provide the values: example below:
 
 ## Referencing values from `Get Functions`
 
-You can use SPeL to get values from the response to the `Lambda - Get Functions` stage.  Here is an example SPeL expression to get a function name. 
+You can use SpEL to get values from the response to the `Lambda - Get Functions` stage.  Here is an example SpEL expression to get a function name. 
 
 `${#stage("Lambda - Get Functions").context.webhook.body[0].functionName}`
 
