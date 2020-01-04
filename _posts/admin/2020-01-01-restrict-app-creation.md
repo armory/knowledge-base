@@ -9,61 +9,93 @@ type: Document
 
 ## Background
 
-Before version 2.17, there was no way to prevent application creation in Spinnaker, now in 2.17, Fiat add a new option which allow achieve this, with a new permission option CREATE.
+Before version 2.17, there was no way to prevent application creation in Spinnaker. In Armory Spinnaker 2.17 and later, Fiat can now control application creation through the use of a new permission option: `CREATE`.
 
 This document assumes that you have enabled and configured Fiat.
 
+**This was tested on version 2.17 and may change in later versions.**
+
 ## Restrict application creation
 
-**This was tested on version 2.17 and may change in further versions.**
+Fiat is the authorization (authz) microservice of Spinnaker, which looks for the permissions from different sources. In 2.17, a new sources were added, providing more flexibility for applying permissions. This page focuseson the `prefix` source to control permissions for any applications whose name starts with a given prefix. To use this functionality, you need to enable Fiat to use the new sources and set prefixes as one of the sources.  `auth.permissions.source.application.prefix`. <br><br>
 
-Fiat is the authorization (authz) microservice of Spinnaker, which look for the permissions from different sources. In 2.17 a new source was added which is more flexible and applies permissions to any application whose name starts with a given prefix, `auth.permissions.source.application.prefix`.
+Perform the following steps:
 
-By default, Fiat only reads from the legacy sources, to change this and allow Fiat reads from other sources like the prefix one, we need to change the value to `aggregate` of the parameter `auth.permissions.provider.application`.
+1. In `fiat-local.yml`, set the value for `auth.permissions.provider.application` parameter to `aggregate`.
+2. Add prefixes as a source:
 
-```yaml
-#fiat-local.yml
-auth.permissions.provider.application: aggregate
-auth.permissions.source.application.prefix:
-  enabled: true
-  prefixes:
-   - prefix: "apptest-*"
-     permissions:
+    ```
+    auth.permissions.source.application.prefix:
+      enabled: true
+    ```
+3. Define the permissions for a prefix:
+    
+    ```
+    - prefix: <some_prefix>
+      permissions:
        READ:
-       - "role-one"
-       - "role-two"
+       - "<user role 1>"
+       - "<user role 2>"
+       - "<user role n>"
        WRITE:
-       - "role-one"
+       - "<user role n>"
        EXECUTE:
-       - "role-one"
-```
+       - "user role n>"
+   ```
+    The below example does the following:
+    * Enables Fiat to read from the new sources.
+    * Sets `prefix` as one of these new sources.
+    * Defines the prefix `apptest-x`.
+    * Defines permissions for all applications that match the prefix `apptest-*` based on roles:
+      * Add READ, WRITE and EXECUTE permissions to `role-one`.
+      * Add READ permissions to `role-two`.
 
-This will apply the READ restriction on all apps starting with the prefix `apptest-*` to role-two, and add READ, WRITE and EXECUTE permissions to role-one.
+    ```yaml
+    #fiat-local.yml
+    auth.permissions.provider.application: aggregate
+    auth.permissions.source.application.prefix:
+      enabled: true
+      prefixes:
+       - prefix: "apptest-*"
+         permissions:
+           READ:
+           - "role-one"
+           - "role-two"
+           WRITE:
+           - "role-one"
+           EXECUTE:
+           - "role-one"
+    ```
 
-Now, to prevent the application creation in Spinnaker, we have a new option in Fiat to enable `fiat.restrictApplicationCreation` which will allow us to set the CREATE permission to the roles.
+    As a result, any application that matches the prefix `apptest-*` with `role-two` are read-only.<br>
 
-**Currently the prefix source is the only source that support the CREATE permission.**
+4. To restrict application creation specifically, add `fiat.restrictApplicationCreation` and set it to `true`:
 
-```yaml
-#fiat-local.yml
-fiat.restrictApplicationCreation: true
-auth.permissions.provider.application: aggregate
-auth.permissions.source.application.prefix:
-  enabled: true
-  prefixes:
-   - prefix: "*"
-     permissions:
-       CREATE:
-       - "role-one"
-       READ:
-       - "role-one"
-       - "role-two"
-       WRITE:
-       - "role-one"
-       EXECUTE:
-       - "role-one"
-```
-This will prevent the creation of any application to users without CREATE permission, only the users with role-one will create applications in Spinnaker.
+    **Note: Currently, the prefix source is the only source that support the CREATE permission.**
 
-<a href="https://cl.ly/0381358c5f72" target="_blank"><img src="https://d2ddoduugvun08.cloudfront.net/items/2p0o1i0g0w30203c303s/Screen%20Shot%202020-01-03%20at%2011.47.51.png" style="display: block;height: auto;width: 100%;margin-bottom:10px"/></a>
+    ```yaml
+    #fiat-local.yml
+    fiat.restrictApplicationCreation: true
+    auth.permissions.provider.application: aggregate
+    auth.permissions.source.application.prefix:
+      enabled: true
+      prefixes:
+       - prefix: "*"
+         permissions:
+           CREATE:
+           - "role-one"
+           READ:
+           - "role-one"
+           - "role-two"
+           WRITE:
+           - "role-one"
+           EXECUTE:
+           - "role-one"
+    ```
 
+    The above example assigns CREATE permission to users with the `role-one` role. Users without the `role-one` role cannot create any applications in Spinnaker because only `role-one` has CREATE permission.
+
+5. Finally, apply your configuration changes to Spinnaker by running the following command: `hal deploy apply`.
+
+The following screenshot shows what happens when a user without sufficient permissions attempts to create an application in Deck, Spinnaker's UI: 
+![No CREATE Permission](/images/authz_create_permission.png)
