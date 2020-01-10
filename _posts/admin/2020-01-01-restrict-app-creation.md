@@ -11,6 +11,8 @@ type: Document
 
 Before version 2.17, there was no way to prevent application creation in Spinnaker. In Armory Spinnaker 2.17 and later, Fiat can now control application creation through the use of a new permission option: `CREATE`.
 
+**Note**: When configuring permissions, you must explicitly configure permissions for each user role. The default for a user role is no permissions, which means it cannot perform any actions.
+
 This document assumes that you have enabled and configured Fiat.
 
 **This was tested on version 2.17 and may change in later versions.**
