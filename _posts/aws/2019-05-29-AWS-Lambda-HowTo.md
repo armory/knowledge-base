@@ -70,8 +70,8 @@ webhook:
         "credentials": "${#root['parameterValues']['account']}",
         "region": "${#root['parameterValues']['region']}",
         "functionName": "${#root['parameterValues']['functionName']}",
-        "s3Bucket": "${#root['parameterValues']['bucketname']}",
-        "s3Key": "${#root['parameterValues']['key']}",
+        "s3bucket": "${#root['parameterValues']['bucketname']}",
+        "s3key": "${#root['parameterValues']['key']}",
         "publish": "${#root['parameterValues']['publish']}"
       }
     parameters:
@@ -206,8 +206,8 @@ curl -X POST \
     "region": "us-west-2",
     "functionName": "helloArmoryfx",
     "credentials": "aws",
-    "s3Bucket": "armory-sales-away",
-    "s3Key": "lambdacode/lambdacode-v0.1.zip",
+    "s3bucket": "armory-sales-away",
+    "s3key": "lambdacode/lambdacode-v0.1.zip",
     "publish": "true"
   }'
 ```
