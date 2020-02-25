@@ -29,19 +29,20 @@ spec:
   selector:
     matchLabels:
       app: hello-monday
-template:
-  metadata:
-    labels:
-      app: hello-monday
-  spec:
-    containers:
-    - image: 'justinrlee/nginx:monday'
+  template:
+    metadata:
+      labels:
+        app: hello-monday
+    spec:
+      containers:
+      - image: 'justinrlee/nginx:monday'
+        name: 'hello-today'
 ```
 
 * The base64-formatted version of this is roughly like this (depending on spacing of the above):
 
 ```base64
-YXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IGhlbGxvLXRvZGF5CnNwZWM6CiAgcmVwbGljYXM6IDEKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IGhlbGxvLW1vbmRheQp0ZW1wbGF0ZToKICBtZXRhZGF0YToKICAgIGxhYmVsczoKICAgICAgYXBwOiBoZWxsby1tb25kYXkKICBzcGVjOgogICAgY29udGFpbmVyczoKICAgIC0gaW1hZ2U6ICdqdXN0aW5ybGVlL25naW54Om1vbmRheScK
+YXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IGhlbGxvLXRvZGF5CnNwZWM6CiAgcmVwbGljYXM6IDEKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IGhlbGxvLW1vbmRheQogIHRlbXBsYXRlOgogICAgbWV0YWRhdGE6CiAgICAgIGxhYmVsczoKICAgICAgICBhcHA6IGhlbGxvLW1vbmRheQogICAgc3BlYzoKICAgICAgY29udGFpbmVyczoKICAgICAgLSBpbWFnZTogJ2p1c3RpbnJsZWUvbmdpbng6bW9uZGF5JwogICAgICAgIG5hbWU6ICdoZWxsby10b2RheScK
 ```
 
 * Create a Spinnaker stage of type "Run Job (Manifest)"
@@ -61,7 +62,7 @@ spec:
       - 
         command: 
           - echo
-          - "SPINNAKER_CONFIG_JSON={\"artifacts\": [{\"type\":\"embedded/base64\",\"name\": \"hello-manifest\", \"reference\": \"YXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IGhlbGxvLXRvZGF5CnNwZWM6CiAgcmVwbGljYXM6IDEKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IGhlbGxvLW1vbmRheQp0ZW1wbGF0ZToKICBtZXRhZGF0YToKICAgIGxhYmVsczoKICAgICAgYXBwOiBoZWxsby1tb25kYXkKICBzcGVjOgogICAgY29udGFpbmVyczoKICAgIC0gaW1hZ2U6ICdqdXN0aW5ybGVlL25naW54Om1vbmRheScK\"}]}"
+          - "SPINNAKER_CONFIG_JSON={\"artifacts\": [{\"type\":\"embedded/base64\",\"name\": \"hello-manifest\", \"reference\": \"YXBpVmVyc2lvbjogYXBwcy92MQpraW5kOiBEZXBsb3ltZW50Cm1ldGFkYXRhOgogIG5hbWU6IGhlbGxvLXRvZGF5CnNwZWM6CiAgcmVwbGljYXM6IDEKICBzZWxlY3RvcjoKICAgIG1hdGNoTGFiZWxzOgogICAgICBhcHA6IGhlbGxvLW1vbmRheQogIHRlbXBsYXRlOgogICAgbWV0YWRhdGE6CiAgICAgIGxhYmVsczoKICAgICAgICBhcHA6IGhlbGxvLW1vbmRheQogICAgc3BlYzoKICAgICAgY29udGFpbmVyczoKICAgICAgLSBpbWFnZTogJ2p1c3RpbnJsZWUvbmdpbng6bW9uZGF5JwogICAgICAgIG5hbWU6ICdoZWxsby10b2RheScK\"}]}"
         image: alpine
         name: manifest-generator
       restartPolicy: Never
