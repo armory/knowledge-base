@@ -5,6 +5,8 @@ categories:
    - Releases
 description: Armory's definition of Experiment, Early Release, Beta, and GA, and what environments to install them on
 type: Document
+redirect_from:
+  - /releases/early-release-beta-GA/
 ---
 
 ### Question
