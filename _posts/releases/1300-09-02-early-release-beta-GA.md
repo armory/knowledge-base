@@ -18,7 +18,7 @@ This is a description that varies from company to company. We decided to publish
 ### Experiment
 An experiment is a test version of a new feature that we think will solve some of your pain points. This is your opportunity to provide us feedback. We want to hear the good, the bad, and the ugly, so we can create the best feature to solve your problem.
 <br><br>
-**Where To Install Early Release**
+**Where To Install an Experiment**
 Not production! No, really don’t do it! An experimental feature is meant to give the user access to a concept we think would be useful and gives Armory a chance to collect feedback on validating the usefulness and direction of the feature. Experiments are meant for a closed development environment or a learning environment that can be destroyed at any minute and rebuilt.
 <br><br>
 ### Early Release
