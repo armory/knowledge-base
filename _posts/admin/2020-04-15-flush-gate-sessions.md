@@ -50,3 +50,9 @@ When you're all finished, you can remove the image by doing:
 ```bash
 kubectl --context $MY_CONTEXT -n $MY_NAMESPACE delete deployment debugging-tools
 ```
+
+
+## Extra Resources
+[spinnaker/issues/1947](https://github.com/spinnaker/spinnaker/issues/1947)
+
+[spring-session/issues/280](https://github.com/spring-projects/spring-session/issues/280)
