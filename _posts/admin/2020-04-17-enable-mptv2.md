@@ -17,7 +17,7 @@ Instead, Armory recommends using Armory's Pipeline as Code feature because it of
 
 Note that Armory's Pipeline as Code and the open source Managed Pipeline Templates are not integrated and do not work together.
 
-If you want to enable Managed Pipeline Templates, add the following configuration to `SOME HAL CONFIG FILE`:
+If you want to enable Managed Pipeline Templates UI, add the following configuration to `SOME HAL CONFIG FILE`:
 
 ```
 <insert instructions to enable>
