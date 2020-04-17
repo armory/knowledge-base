@@ -1,6 +1,6 @@
 ---
 date: 2020-04-17
-title: Enabling Managed Pipeline Templates
+title: Enabling the Managed Pipeline Templates UI
 categories:
    - Admin
 description: How to enable the Managed Pipeline Templates UI in Armory Spinnaker
