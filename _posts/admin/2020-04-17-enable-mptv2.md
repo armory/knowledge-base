@@ -25,7 +25,10 @@ If you want to enable the Managed Pipeline Templates UI, run the following Halya
 hal config features edit --pipeline-templates true
 hal config features edit --managed-pipeline-templates-v2-ui true
 ```
+You will also need to update Deck settings in `.hal/<deploy-name>/profiles/settings-local.js` to include the feature flag for MPTv2:
 
+```js
+window.spinnakerSettings.feature.managedPipelineTemplatesV2UI = true;
 Next, apply your changes to Spinnaker:
 
 ```
