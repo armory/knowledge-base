@@ -19,8 +19,14 @@ Note that Armory's Pipeline as Code and the open source Managed Pipeline Templat
 
 By default, the Managed Pipeline Tempalte UI is disabled in Armory Spinnaker 2.19.5. Leaving the UI disabled maintains the same experience you had with Armory Spinnaker 2.18.x (OSS 1.18.x).
 
-If you want to enable the Managed Pipeline Templates UI, add the following configuration to `SOME HAL CONFIG FILE`:
+If you want to enable the Managed Pipeline Templates UI, run the following Halyard command:
 
 ```
-<insert instructions to enable>
+hal config features edit --managed-pipeline-templates-v2-ui true
+```
+
+Next, apply your changes to Spinnaker:
+
+```
+hal deploy apply
 ```
