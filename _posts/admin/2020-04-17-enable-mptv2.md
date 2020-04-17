@@ -7,9 +7,9 @@ description: How to enable the Managed Pipeline Templates UI in Armory Spinnaker
 type: Document
 ---
 
-Armory Spinnaker 2.19 contains the latest version of Managed Pipeline Templates, which is the default pipeline templating solution offered in OSS Spinnaker. 
+Armory Spinnaker 2.19 contains the latest version of Managed Pipeline Templates v2 (MPTv2), which is the default pipeline templating solution offered in OSS Spinnaker. 
 
-Instead, Armory recommends using Armory's Pipeline as Code feature because it offers the following benefits:
+Armory recommends using Armory's Pipeline as Code feature instead of MPTv2 because it offers the following benefits:
 
 * Integration with GitHub, GitLab and BitBucket enabling teams to store pipelines with application code
 * Templates and access to the templates can be stored and managed separately from pipelines
