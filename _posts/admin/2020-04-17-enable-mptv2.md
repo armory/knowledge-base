@@ -17,7 +17,7 @@ Instead, Armory recommends using Armory's Pipeline as Code feature because it of
 
 Note that Armory's Pipeline as Code and the open source Managed Pipeline Templates are not integrated and do not work together.
 
-By default, the UI is disabled in Armory Spinnaker 2.19.5. Leaving the UI disabled maintains the same experience you had with Armory Spinnaker 2.18.x (OSS 1.18.x).
+By default, the Managed Pipeline Tempalte UI is disabled in Armory Spinnaker 2.19.5. Leaving the UI disabled maintains the same experience you had with Armory Spinnaker 2.18.x (OSS 1.18.x).
 
 If you want to enable the Managed Pipeline Templates UI, add the following configuration to `SOME HAL CONFIG FILE`:
 
