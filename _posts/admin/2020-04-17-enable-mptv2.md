@@ -29,6 +29,8 @@ You will also need to update Deck settings in `.hal/<deploy-name>/profiles/setti
 
 ```js
 window.spinnakerSettings.feature.managedPipelineTemplatesV2UI = true;
+```
+
 Next, apply your changes to Spinnaker:
 
 ```
