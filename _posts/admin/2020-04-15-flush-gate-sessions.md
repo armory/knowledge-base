@@ -39,7 +39,7 @@ You must have network access to Redis and have the `redis-cli` installed. If you
 Armory recommends using the [`armory/docker-debugging-tools`](https://github.com/armory/docker-debugging-tools) and deploying it into your Spinnaker namespace. This image contains `redis-cli`. Run the following commands:
 
 ```bash
-kubectl --context $MY_CONTEXT -n $MY_NAMESPACE apply -f https://raw.githubusercontent.com/armory/docker-debugging-tools/master/deployment.yml
+kubectl --context $MY_CONTEXT -n $MY_NAMESPACE apply -f https://raw.githubusercontent.com/armory/troubleshooting-toolbox/master/docker-debugging-tools/deployment.yml
 
 kubectl --context $MY_CONTEXT -n $MY_NAMESPACE exec -it deploy/debugging-tools -- bash
 ```
@@ -52,11 +52,25 @@ Run the following command to exec into the Gate pod:
 k --context $MY_CONTEXT -n $MY_NAMESPACE exec -it deploy/spin-gate -c gate -- cat /opt/spinnaker/config/spinnaker.yml | grep -A2 redis
 ```
 
-Then, run the following command in the pod to flush the sessions:
+Capture the Redis url from the `baseUrl` field in the resulting output, it will look something like the follwoing:
+
+```
+  redis:
+    baseUrl: redis://my-redis-url.example.com:6379
+    enabled: true
+    host: 0.0.0.0
+```
+
+In this example, you would use `my-redis-url.example.com`, without the protocol and port data.
+
+Then, run the following command in the pod you started in your cluster to flush the sessions:
 
 ```bash
-redis-cli -h my-redis-url.armory.io keys 'spring:session:*' | xargs redis-cli del
+redis-cli -h my-redis-url.example.com keys 'spring:session:*' | xargs redis-cli del
 ```
+
+_Note: you may safely ignore errors connecting to 127.0.0.1:6379 if your redis
+is located elsewhere._
 
 ### Step 3. Remove the debugging tools
 
