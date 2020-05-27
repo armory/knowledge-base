@@ -1,63 +1,77 @@
 ---
 date: 2020-05-27
-title: How to fix TLS error "Reason: extension (5) should not be presented in certificate_request"
+title: How to add a custom CA for Operator and Vault
 categories:
-   - troubleshooting
+   - kubernetes
    - tls
-description: How to fix TLS error "Reason: extension (5) should not be presented in certificate_request"
+description: Enable the Operator and Vault to use a custom CA.
 type: Document
 ---
 
+## Problem
 
-# Mounting Custom CA to Operator Spinnaker & Halyard in Operator
-
-Keyword: “x509: certificate signed by unknown authority”
-
-## Background: 
-
-This situation occurred with a custom cert on the vault server for secrets. 
+When Spinnaker attempts to fetch a Vault token, you encounter the following error:
 
 ```
     error fetching vault token - error logging into vault using kubernetes auth: Put https://spinnaker-vault.vault.svc.cluster.local:8200/v1/auth/kubernetes/login: x509: certificate signed by unknown authority
 ```
 
-In order to do so - we first need to copy the original cert.pem file from /etc/ssl/cert.pem and then append the custom ca for vault, and then mount the cert.pem similar to the /etc/ssl/certs/java/cacerts
+This happens because you are using a custom CA and the Operator.
 
-## Instructions:
-after spinnaker-operator launches
+## Solution
 
-1. cp cert.pem from the operator to local directory
-2. `kubectl cp -n spinnaker-operator -c spinnaker-operator spinnaker-operator-xxxxx:etc/ssl/cert.pem .`
-3. append cert to cert.pem
-4. `cat myCA.crt >> cert.pem`
-5. `cat myVault.crt >> cert.pem` ... and any other additional crt
-6. create a secret for cert.pem to be mounted into spinnaker operator
-7. `kubectl create secret generic spinop-certs -n spinnaker-operator --from-file cert.pem`
-8. add volume and volume mounts to Spinnaker Operator deployment
+Resolving this issue involves the following steps: 
+* Copy the original `cert.pem` file from `/etc/ssl/cert.pem` a
+* Append the custom ca for Vault
+* Mount the `cert.pem` similar to the `/etc/ssl/certs/java/cacerts`
 
-```
-        spec:
-          serviceAccountName: spinnaker-operator
-          containers:
-            - name: spinnaker-operator
-              image: armory/armory-operator:0.4.0
-              ...
-                - mountPath: /etc/ssl
-                  name: internal-cert-pem
-            - name: halyard
-              image: armory/halyard-armory:operator-0.4.x
-              imagePullPolicy: IfNotPresent
-              ...
-              volumeMounts:
-                - mountPath: /etc/ssl/certs/java
-                  name: internal-trust-store
-          volumes:
-          - name: internal-trust-store
-            secret:
-              defaultMode: 420
-              secretName: internal-trust-store
-          - name: internal-cert-pem
-            secret:
-              defaultMode: 420
-              secretName: internal-cert-pem
-```
+While the Operator is running, perform the following steps:
+
+1. Copy `cert.pem` from the Operator to a local directory:
+   
+   ```
+   kubectl cp -n spinnaker-operator -c spinnaker-operator spinnaker-operator-xxxxx:etc/ssl/cert.pem .
+   ```
+
+2. Append your custom cert to `cert.pem`:
+   ```
+   cat myCA.crt >> cert.pem
+   ```
+
+3. Append any other additional certs:
+   ```
+   cat myVault.crt >> cert.pem
+   ```
+4. Create a Kubernetes secret for `cert.pem`:
+   ```
+   kubectl create secret generic spinop-certs -n spinnaker-operator --from-file cert.pem
+   ```
+   This secret gets mounted into Spinnaker Operator.
+5. Add volume and volume mounts to Spinnaker Operator:
+
+   ```
+   spec:
+     serviceAccountName: spinnaker-operator
+     containers:
+       - name: spinnaker-operator
+         image: armory/armory-operator:0.4.0
+         ...
+           - mountPath: /etc/ssl
+             name: internal-cert-pem
+       - name: halyard
+         image: armory/halyard-armory:operator-0.4.x
+         imagePullPolicy: IfNotPresent
+         ...
+         volumeMounts:
+           - mountPath: /etc/ssl/certs/java
+             name: internal-trust-store
+     volumes:
+     - name: internal-trust-store
+       secret:
+         defaultMode: 420
+         secretName: internal-trust-store
+     - name: internal-cert-pem
+       secret:
+         defaultMode: 420
+         secretName: internal-cert-pem
+   ```
