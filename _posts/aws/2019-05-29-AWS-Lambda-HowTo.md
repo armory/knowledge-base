@@ -7,6 +7,9 @@ description: How to enable AWS Lambda and use a custom webhook stage to update y
 type: Document
 ---
 
+## NOTE:
+This document is out-of-date and readers should refer to the AWS blogpost for enabling Lambda.  https://aws.amazon.com/blogs/opensource/how-to-integrate-aws-lambda-with-spinnaker/
+
 ## Background
 
 Back in December of 2018, AWS added supported for Lambda and it was released in Spinnaker OSS v1.12.  The challenge, however, was that there was no UI (Deck) components to support the usage of Lambda.  Instead, a [README.md](https://github.com/spinnaker/clouddriver/blob/master/clouddriver-lambda/README.md) was published that specified the API to make changes to Lambda.
