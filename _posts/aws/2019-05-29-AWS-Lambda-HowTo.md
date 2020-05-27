@@ -8,7 +8,7 @@ type: Document
 ---
 
 ## NOTE:
-This document is out-of-date and readers should refer to the AWS blogpost for enabling Lambda.  https://aws.amazon.com/blogs/opensource/how-to-integrate-aws-lambda-with-spinnaker/
+This document is obsolete. Refer to the AWS blogpost for [enabling Lambda with Spinnaker](https://aws.amazon.com/blogs/opensource/how-to-integrate-aws-lambda-with-spinnaker/).
 
 ## Background
 
